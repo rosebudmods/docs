@@ -1,0 +1,9 @@
+---
+import { CardGrid } from '@astrojs/starlight/components';
+import ModCard from './ModCard.astro';
+import { mods } from '@modrinth';
+---
+
+<CardGrid>
+    {mods.map((mod) => <ModCard {mod} />)}
+</CardGrid>

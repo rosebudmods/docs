@@ -1,0 +1,72 @@
+---
+import type { Project } from '@modrinth';
+
+interface Props {
+    mod: Project;
+}
+
+const { mod } = Astro.props;
+const banner = mod.gallery?.filter((g) => g.featured)[0];
+---
+
+<article class="card">
+    {banner && <img class="banner" src={banner.url} aria-hidden="true" />}
+    <p class="title sl-flex">
+        <img class="icon" src={mod.icon_url} alt=`Icon for ${mod.title}` />
+        <span>{mod.title}</span>
+    </p>
+    <div class="body">{mod.description}</div>
+</article>
+
+<style lang="scss">
+    .card {
+        --sl-card-border: var(--sl-color-purple);
+        --sl-card-bg: var(--sl-color-purple-low);
+
+        display: flex;
+        flex-direction: column;
+
+        background-color: var(--sl-color-black);
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 1rem;
+
+        .banner {
+            width: 100%;
+            height: 8rem;
+            object-fit: cover;
+            margin-bottom: -5rem;
+
+            border-radius: 1em 1em 0 0;
+        }
+
+        .icon {
+            border: 4px solid var(--sl-color-black);
+            border-radius: 1rem;
+            width: 4em;
+        }
+
+        .title {
+            padding: 1.5rem 2rem 0;
+            gap: 0.75rem;
+            align-items: center;
+
+            font-weight: 600;
+            font-size: var(--sl-text-h4);
+            color: var(--sl-color-white);
+            line-height: var(--sl-line-height-headings);
+        }
+
+        &:has(.banner) .title span {
+            margin-top: 2rem;
+        }
+
+        .body {
+            padding: 0 2rem 1.5rem;
+            font-size: clamp(
+                var(--sl-text-sm),
+                calc(0.5rem + 1vw),
+                var(--sl-text-body)
+            );
+        }
+    }
+</style>
