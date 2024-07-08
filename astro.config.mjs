@@ -15,6 +15,17 @@ export default defineConfig({
                 discord: 'https://discord.rosebud.dev/',
             },
             customCss: ['./src/style/index.css'],
+            sidebar: [
+                { label: 'overview', slug: 'overview' },
+                {
+                    label: 'rainglow',
+                    autogenerate: { directory: 'rainglow' },
+                },
+                {
+                    label: 'bodacious berries',
+                    autogenerate: { directory: 'berries' },
+                },
+            ],
         }),
     ],
 });

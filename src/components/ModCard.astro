@@ -12,7 +12,7 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
 <article class="card">
     {banner && <img class="banner" src={banner.url} aria-hidden="true" />}
     <p class="title sl-flex">
-        <a href=`/${mod.slug}`
+        <a href=`/${mod.slug}/`
             ><img
                 class="icon"
                 src={mod.icon_url}

@@ -10,6 +10,12 @@
     font-family: 'Manrope', sans-serif;
 }
 
+/* make tables scrollable! */
+table {
+    max-width: max-content;
+    white-space: nowrap;
+}
+
 /* Dark mode colors. */
 :root {
     --sl-color-accent-low: #331a2d;
