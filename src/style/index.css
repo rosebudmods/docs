@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+:root {
+    --sl-font: 'Manrope', sans-serif;
+}
+
+/* Dark mode colors. */
+:root {
+    --sl-color-accent-low: #331a2d;
+    --sl-color-accent: #9d4189;
+    --sl-color-accent-high: #dfbdd5;
+    --sl-color-white: #ffffff;
+    --sl-color-gray-1: #f7e9f3;
+    --sl-color-gray-2: #cdbcc8;
+    --sl-color-gray-3: #a08097;
+    --sl-color-gray-4: #6b4d62;
+    --sl-color-gray-5: #492e42;
+    --sl-color-gray-6: #361d30;
+    --sl-color-black: #20141c;
+}
+
+/* Light mode colors. */
+:root[data-theme='light'] {
+    --sl-color-accent-low: #e8cee0;
+    --sl-color-accent: #9f438b;
+    --sl-color-accent-high: #4a2240;
+    --sl-color-white: #20141c;
+    --sl-color-gray-1: #361d30;
+    --sl-color-gray-2: #492e42;
+    --sl-color-gray-3: #6b4d62;
+    --sl-color-gray-4: #a08097;
+    --sl-color-gray-5: #cdbcc8;
+    --sl-color-gray-6: #f7e9f3;
+    --sl-color-gray-7: #fbf4f9;
+    --sl-color-black: #ffffff;
+}

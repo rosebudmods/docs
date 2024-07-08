@@ -5,11 +5,16 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
     integrations: [
         starlight({
-            title: 'rosebud docs',
-            description: "the documentation for rosebud's mods",
-            social: {
-                github: 'https://github.com/withastro/starlight',
+            title: 'rosebud',
+            description: "rosebud's mods, and their documentation",
+            logo: {
+                src: './src/assets/rosebud.svg',
             },
+            social: {
+                github: 'https://github.com/rosebudmods',
+                discord: 'https://discord.rosebud.dev/',
+            },
+            customCss: ['./src/style/index.css'],
             sidebar: [
                 {
                     label: 'Guides',
