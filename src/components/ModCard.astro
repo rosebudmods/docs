@@ -1,27 +1,41 @@
 ---
-import type { Project } from '@modrinth';
+import type { Project } from '@ts/modrinth';
+import { formatNumber } from '@ts/util';
 
 interface Props {
     mod: Project;
+    extended?: boolean;
 }
 
-const { mod } = Astro.props;
+const { mod, extended = false } = Astro.props;
 const banner = mod.gallery?.filter((g) => g.featured)[0];
 ---
 
-<article class="card">
+<article class:list={['card', !extended && 'link']}>
     {banner && <img class="banner" src={banner.url} aria-hidden="true" />}
     <p class="title sl-flex">
-        <a href=`/${mod.slug}/`
-            ><img
-                class="icon"
-                src={mod.icon_url}
-                alt=`Icon for ${mod.title}`
-            /></a
-        >
+        <img
+            class="icon"
+            src={mod.icon_url}
+            alt=`Icon for ${mod.title}`
+        />
         <span>{mod.title}</span>
+        {!extended && <a class="filling" href=`/${mod.slug}/` />}
     </p>
     <div class="body">{mod.description}</div>
+    {extended && <div class="info">
+        <div>
+            <span><b>{mod.client_side}</b> on client, <b>{mod.server_side}</b> on server</span>
+            <span>released for <b>{mod.game_versions[0]}</b>&mdash;<b>{mod.game_versions.at(-1)}</b></span>
+            <span>
+                <a href={mod.source_url}>sources</a> &bull;
+                <a href={mod.issues_url}>issues</a>
+            </span>
+        </div>
+        <div class="stats">
+            <span>{formatNumber(mod.downloads)}</span> downloads
+        </div>
+    </div>}
 </article>
 
 <style lang="scss">
@@ -39,13 +53,13 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
 
         transition: transform 0.25s;
 
-        a::before {
+        .filling::before {
             content: '';
             position: absolute;
             inset: 0;
         }
 
-        &:hover {
+        &.link:hover {
             transform: scale(102.5%);
         }
 
@@ -80,12 +94,36 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
         }
 
         .body {
-            padding: 0 2rem 1.5rem;
+            padding: 0 2rem;
             font-size: clamp(
                 var(--sl-text-sm),
                 calc(0.5rem + 1vw),
                 var(--sl-text-body)
             );
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+
+            > div {
+                display: flex;
+                flex-direction: column;
+            }
+
+            > .stats {
+                text-align: right;
+
+                span {
+                    font-size: 3em;
+                    line-height: 1;
+                }
+            }
+        }
+
+        > :last-child {
+            margin-bottom: 1.5rem;
         }
     }
 </style>

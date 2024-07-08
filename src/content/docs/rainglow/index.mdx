@@ -7,12 +7,17 @@ sidebar:
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ModInfo from '@components/ModInfo.astro';
+import { mods } from '@ts/modrinth';
 
-welcome to the rainglow wiki! This wiki provides documentation on all of rainglow's core features.
-
-<CardGrid>
-  <LinkCard title="how to create a new mode through json" href="creating-custom-modes/" />
-  <LinkCard title="information on the rainglow config" href="config/" />
-  <LinkCard title="how server sync works" href="server-sync/" />
-  <LinkCard title="reference for making custom modes" href="reference/" />
-</CardGrid>
+<ModInfo mod={mods.rainglow}>
+  <CardGrid>
+    <LinkCard
+      title="how to create a new mode through json"
+      href="creating-custom-modes/"
+    />
+    <LinkCard title="information on the rainglow config" href="config/" />
+    <LinkCard title="how server sync works" href="server-sync/" />
+    <LinkCard title="reference for making custom modes" href="reference/" />
+  </CardGrid>
+</ModInfo>

@@ -6,8 +6,8 @@
             "@components/*": [
                 "src/components/*"
             ],
-            "@modrinth": [
-                "src/modrinth/index.ts"
+            "@ts/*": [
+                "src/ts/*"
             ]
         }
     }

@@ -7,18 +7,22 @@ sidebar:
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ModInfo from '@components/ModInfo.astro';
+import { mods } from '@ts/modrinth';
 
-Welcome to the bodacious berries wiki!
-
-<CardGrid>
-  <LinkCard
-    title="creating custom juicer recipes"
-    description="create juicer recipes using JSON recipes in data packs!"
-    href="custom-juicing-recipes/" />
-  <LinkCard
-    title="bushes and berries"
-    description="all the different berries and bushes, and their uses!"
-    href="bushes-and-berries/" />
-  <LinkCard title="(TODO) the machines of bodacious berries" />
-  <LinkCard title="configuration" href="configuration-file/" />
-</CardGrid>
+<ModInfo mod={mods.berries}>
+  <CardGrid>
+    <LinkCard
+      title="creating custom juicer recipes"
+      description="create juicer recipes using JSON recipes in data packs!"
+      href="custom-juicing-recipes/"
+    />
+    <LinkCard
+      title="bushes and berries"
+      description="all the different berries and bushes, and their uses!"
+      href="bushes-and-berries/"
+    />
+    <LinkCard title="(TODO) the machines of bodacious berries" />
+    <LinkCard title="configuration" href="configuration-file/" />
+  </CardGrid>
+</ModInfo>

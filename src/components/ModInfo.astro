@@ -1,0 +1,29 @@
+---
+import type { Project } from '@ts/modrinth';
+import ModCard from './ModCard.astro';
+import { marked } from 'marked';
+import { LinkCard } from '@astrojs/starlight/components';
+
+interface Props {
+    mod: Project;
+}
+
+const { mod } = Astro.props;
+---
+
+<ModCard {mod} extended />
+
+<LinkCard
+    title="download it on Modrinth!"
+    href=`https://modrinth.com/project/${mod.id}`
+/>
+
+<slot />
+
+<article set:html={marked.parse(mod.body)} />
+
+<style lang="scss">
+    article :global(:first-child:is(h1)) {
+        display: none;
+    }
+</style>
