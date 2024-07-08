@@ -72,13 +72,17 @@ export type Project = {
 
 export async function getProject(id: string): Promise<Project> {
     return await (
-        await fetch('https://api.modrinth.com/v2/project/' + id)
+        await fetch('https://api.modrinth.com/v2/project/' + id, {
+            headers: {
+                'user-agent': 'rosebudmods/docs (orifu@duck.com)',
+            },
+        })
     ).json();
 }
 
-export const mods = [
-    await getProject('Bk6pUD7R'), // rainglow
-    await getProject('KEFyvbuH'), // bodacious berries
-    await getProject('4Uw92C2y'), // ramel
-    await getProject('GON0Fdk5'), // skin overrides
-];
+export const mods = {
+    rainglow: await getProject('Bk6pUD7R'), // rainglow
+    berries: await getProject('KEFyvbuH'), // bodacious berries
+    ramel: await getProject('4Uw92C2y'), // ramel
+    skinOverrides: await getProject('GON0Fdk5'), // skin overrides
+};

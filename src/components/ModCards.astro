@@ -5,5 +5,5 @@ import { mods } from '@modrinth';
 ---
 
 <CardGrid>
-    {mods.map((mod) => <ModCard {mod} />)}
+    {Object.values(mods).map((mod) => <ModCard {mod} />)}
 </CardGrid>
