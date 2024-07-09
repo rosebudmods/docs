@@ -1,5 +1,8 @@
 ---
 title: tips & tricks
+description: neat tips for skin overrides!
+sidebar:
+  order: 3
 ---
 
 ## using when creating skins
