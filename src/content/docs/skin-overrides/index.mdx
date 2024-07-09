@@ -10,4 +10,27 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 import ModInfo from '@components/ModInfo.astro';
 import { mods } from '@ts/modrinth';
 
-<ModInfo mod={mods.skinOverrides} />
+<ModInfo mod={mods.skinOverrides}>
+  <CardGrid>
+    <LinkCard
+      title="usage guide"
+      description="get started using skin overrides!"
+      href="usage/"
+    />
+    <LinkCard
+      title="advanced usage"
+      description="learn how to manage override files!"
+      href="advanced/"
+    />
+    <LinkCard
+      title="tips & tricks"
+      description="advice for skin artists, and more!"
+      href="tips-and-tricks/"
+    />
+    <LinkCard
+      title="compatibility"
+      description="see which versions the mod works on!"
+      href="compatibility/"
+    />
+  </CardGrid>
+</ModInfo>
