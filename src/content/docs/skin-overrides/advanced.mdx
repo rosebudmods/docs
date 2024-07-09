@@ -1,0 +1,116 @@
+---
+title: advanced usage
+description: how to manage skin override's files yourself!
+sidebar:
+  order: 2
+---
+
+import { FileTree } from '@astrojs/starlight/components';
+
+this page has information on how to manually modify skin or cape overrides, rather than using the ui.
+
+skin overrides are stored in `.minecraft/skin_overrides`, and cape overrides are stored in `.minecraft/cape_overrides`.
+
+<FileTree>
+
+- .minecraft
+  - skin_overrides contains all your skin override files
+    - library contains your library textures
+      - example.png
+      - ...
+    - library.json the library's definition
+    - example.png the actual overrides
+    - example.txt
+    - ...
+  - cape_overrides contains all your cape override files
+    - library
+      - example.png
+      - ...
+    - library.json
+    - example.png
+    - example.txt
+    - ...
+
+</FileTree>
+
+## overrides format
+
+overrides are stored in the `skin_overrides` or `cape_overrides` folders. they can either be a `txt` file or a `png` file.
+
+to identify a player, a file name must include a player id. a player id can be one of the following:
+
+- the player's username (case does not matter) (eg `oriifu`)
+- the player's uuid (case and hyphens do not matter) (eg `f369e23f-ed67-4f6a-8e79-4a2ca148691a`)
+
+### `png` files
+
+a `png` override simply replaces the skin/cape texture with the file. files should be called `[id].png`.
+
+for skins, files will be processed like other skins. this means, for instance, if you have a legacy &lt;1.8 skin, you can use it, and the game will upgrade it just like it would any other skin.
+
+with skins, you can also optionally provide a model. the model can either be `wide` or `slim`, and goes in the filename like `[id].[model].png`.
+
+<FileTree>
+
+- skin_overrides
+  - ORIIFU.png overrides oriifu's skin with this image (defaults to wide model)
+  - ix0rai.slim.png overrides ix0rai's skin with this image (slim model)
+  - thonkman.wide.png overrides Thonkman's skin with this image (wide model)
+- cape_overrides
+  - oriifu.png overrides oriifu's cape
+
+</FileTree>
+
+### `txt` files
+
+`txt` files are always named `[id].png` and contain a namespaced id. right now the only functioning namespace is `skin_overrides`, which will use the skin/cape from the library with the given id. if the id doesn't exist, nothing will happen.
+
+```
+// skin_overrides/oriifu.txt
+skin_overrides:library_id_here
+```
+
+## library format
+
+the `library.json` file in either the skin or cape overrides folders contains a list of library objects:
+
+| key       | type     | description                                               | required          |
+| --------- | -------- | --------------------------------------------------------- | ----------------- |
+| `name`    | `string` | the name of the library entry. will be shown in the ui.   | yes               |
+| `id`      | `string` | the id of the library entry. should be any unique string. | yes               |
+| `file`    | `string` | the name of a file in the library folder.                 | yes, or `texture` |
+| `texture` | `string` | the namespaced id of a texture.                           | yes, or `file`    |
+| `model`   | `string` | for skins. either `wide` or `slim`.                       | skins only        |
+
+here is an example library, and how it can be used:
+
+<FileTree>
+
+- skin_overrides
+  - library
+    - some_skin.png
+  - library.json
+  - oriifu.txt
+
+</FileTree>
+
+```json
+// library.json
+[
+  {
+    "name": "my skin",
+    "id": "my_awesome_skin",
+    "file": "some_skin.png",
+    "model": "slim"
+  }
+]
+```
+
+```
+// oriifu.txt
+skin_overrides:my_awesome_skin
+```
+
+the images used in the library (for the `file` key) are stored in the `library` folder, under the respective overrides folder.
+
+the library file is reloaded every time the library screen is opened, or every 2 seconds.

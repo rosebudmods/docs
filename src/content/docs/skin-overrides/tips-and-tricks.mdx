@@ -1,0 +1,74 @@
+---
+title: tips & tricks
+description: neat tips for skin overrides!
+sidebar:
+  order: 3
+---
+
+import {
+  Aside,
+  CardGrid,
+  FileTree,
+  LinkCard,
+  Steps,
+} from '@astrojs/starlight/components';
+
+## for skin artists
+
+this mod was created in order to instantly preview skins from within the game. to do this, you just need to export the skin texture from your software (eg [blockbench](https://blockbench.net/)), like this:
+
+<Steps>
+
+1.  go to the [.minecraft folder](https://minecraft.wiki/w/.minecraft).
+
+2.  open (or create) the `skin_overrides` folder.
+
+    <FileTree>
+
+    - .minecraft
+      - **skin_overrides/**
+
+    </FileTree>
+
+3.  export your skin texture into this folder, naming it `[username].[slim or wide].png`. for example, if i (oriifu) was testing a slim skin, i would call it `oriifu.slim.png`, like this:
+
+    <FileTree>
+
+    - .minecraft
+      - skin_overrides
+        - **oriifu.slim.png**
+
+    </FileTree>
+
+    <Aside type="tip">
+
+    you can put any username or uuid in the name. you can also omit `wide`, as it's the default. examples:
+
+    - `steve.png` (applies a wide skin to the player Steve)
+    - `f369e23f-ed67-4f6a-8e79-4a2ca148691a.slim.png` (applies a slim skin to me)
+    - `6a5acc4839004c169c73bd9c7eb0087e.wide.png` (applies a wide skin to rai)
+
+    </Aside>
+
+4.  to update your skin in game, simply re-export the texture.
+
+    you don't need to run a command or do a resource reload--the skin will update automagically!
+
+</Steps>
+
+### other helpful mods
+
+if you also want to get another player's perspective, you can use a mod like [freecam](https://modrinth.com/mod/XeEZ3fK2) to separate your camera from your body, or [carpet](https://github.com/gnembon/fabric-carpet/releases) to create fake players (`/player [name] spawn`) which you can also override the skins of.
+
+<CardGrid>
+  <LinkCard
+    title="freecam"
+    description="get it on modrinth!"
+    href="https://modrinth.com/mod/XeEZ3fK2"
+  />
+  <LinkCard
+    title="carpet"
+    description="get it on github!"
+    href="https://github.com/gnembon/fabric-carpet/releases"
+  />
+</CardGrid>
