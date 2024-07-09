@@ -15,7 +15,7 @@ export default defineConfig({
                 github: 'https://github.com/rosebudmods',
                 discord: 'https://discord.rosebud.dev/',
             },
-            customCss: ['./src/style/index.css'],
+            customCss: ['./src/style/index.scss'],
             sidebar: [
                 { label: 'overview', slug: 'overview' },
                 {

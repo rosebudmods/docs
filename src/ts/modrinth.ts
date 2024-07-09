@@ -44,7 +44,7 @@ export type Project = {
     client_and_server: boolean[];
 
     link_urls: {
-        [K in LinkTypes]: {
+        [K in LinkTypes]?: {
             platform: K;
             donation: boolean;
             url: string;

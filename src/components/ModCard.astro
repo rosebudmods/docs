@@ -13,29 +13,35 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
 
 <article class:list={['card', !extended && 'link']}>
     {banner && <img class="banner" src={banner.url} aria-hidden="true" />}
-    <p class="title sl-flex">
-        <img
-            class="icon"
-            src={mod.icon_url}
-            alt=`Icon for ${mod.name}`
-        />
+    <p class="title">
+        <img class="icon" src={mod.icon_url} alt={`Icon for ${mod.name}`} />
         <span>{mod.name}</span>
-        {!extended && <a class="filling" href=`/${mod.slug}/` />}
+        {!extended && <a class="filling" href={`/${mod.slug}/`} />}
     </p>
     <div class="body">{mod.summary}</div>
-    {extended && <div class="info">
-        <div>
-            <span><b>{formatProjectSides(mod)}</b></span>
-            <span>released for <b>{mod.game_versions[0]}</b>&mdash;<b>{mod.game_versions.at(-1)}</b></span>
-            <span>
-                <a href={mod.link_urls.source?.url}>sources</a> &bull;
-                <a href={mod.link_urls.issues?.url}>issues</a>
-            </span>
-        </div>
-        <div class="stats">
-            <span>{formatNumber(mod.downloads)}</span> downloads
-        </div>
-    </div>}
+    {
+        extended && (
+            <div class="info">
+                <div>
+                    <span>
+                        <b>{formatProjectSides(mod)}</b>
+                    </span>
+                    <span>
+                        <!-- prettier-ignore -->
+                        released for <b>{mod.game_versions[0]}</b>&mdash;<b
+                        >{mod.game_versions.at(-1)}</b>
+                    </span>
+                    <span>
+                        <a href={mod.link_urls.source?.url}>sources</a> &bull;
+                        <a href={mod.link_urls.issues?.url}>issues</a>
+                    </span>
+                </div>
+                <div class="stats">
+                    <span>{formatNumber(mod.downloads)}</span> downloads
+                </div>
+            </div>
+        )
+    }
 </article>
 
 <style lang="scss">
@@ -79,6 +85,7 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
         }
 
         .title {
+            display: flex;
             padding: 1.5rem 2rem 0;
             gap: 0.75rem;
             align-items: center;

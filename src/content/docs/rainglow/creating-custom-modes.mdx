@@ -18,11 +18,13 @@ It includes both a tutorial and full documentation on JSON properties and availa
 The first step to creating a rainglow datapack is establishing the directory structure. Your normal data pack looks like this:
 
 <FileTree>
+
 - data
   - minecraft
     - ... most content found here
 - pack.mcmeta metadata for your pack
 - pack.png the icon for your pack
+
 </FileTree>
 
 We're going to be creating a new folder in `data` named `rainglow`, which corresponds to the id of the mod. Inside this folder we'll be creating another named `custom_modes`, from which rainglow discovers data. All files ending with `.json` in this folder will be loaded.
@@ -30,6 +32,7 @@ We're going to be creating a new folder in `data` named `rainglow`, which corres
 Our structure now looks like this:
 
 <FileTree>
+
 - data
   - minecraft/ this folder is not used in our little datapack, it can simply be deleted
   - **rainglow**
@@ -37,6 +40,7 @@ Our structure now looks like this:
       - ... rainglow mode jsons go here!
 - pack.mcmeta metadata for your pack
 - pack.png the icon for your pack
+
 </FileTree>
 
 Now, we get to the fun part: creating your mode! For this tutorial, our goal is to make a mode with the colours of a sunset.
@@ -47,15 +51,7 @@ In your `custom_modes` folder, create a `.json` file. This can be named anything
 {
   "id": "sunset",
   "textColour": "E07000",
-  "colourIds": [
-    "red",
-    "orange",
-    "yellow",
-    "pink",
-    "purple",
-    "indigo",
-    "purple"
-  ]
+  "colourIds": ["red", "orange", "yellow", "pink", "purple", "indigo", "purple"]
 }
 ```
 
@@ -70,12 +66,14 @@ Finally, you need to add translations for your mode. This has to be done through
 In your resource pack, you must have a structure like this:
 
 <FileTree>
+
 - assets
   - rainglow
     - lang
       - en_us.json an english lang file
 - pack.mcmeta metadata for your pack
 - pack.png the icon for your pack
+
 </FileTree>
 
 Inside `en_us.json` (or a different filename if you're using a different language) you must put content like this:

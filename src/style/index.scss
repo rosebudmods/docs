@@ -2,19 +2,25 @@
 
 :root {
     --sl-font: 'Atkinson Hyperlegible', sans-serif;
+
+    // improves colour contrast on dark mode
     --sl-color-text: var(--sl-color-gray-1);
 }
 
+// title font
 :is(h1, h2, h3, h4, h5, h6),
 .site-title > span {
     font-family: 'Manrope', sans-serif;
 }
 
-/* make tables scrollable! */
+// make tables scrollable!
 table {
     max-width: max-content;
     white-space: nowrap;
 }
+
+// colours generated from here: https://starlight.astro.build/guides/css-and-tailwind/#color-theme-editor
+// current settings: hue 337, accent chroma 0.15, grey chroma 0.05
 
 /* Dark mode colors. */
 :root {
