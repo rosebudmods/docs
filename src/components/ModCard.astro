@@ -71,7 +71,7 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
 
         .banner {
             width: 100%;
-            height: 8rem;
+            height: 10rem;
             object-fit: cover;
             margin-bottom: -5rem;
 
@@ -97,10 +97,11 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
         }
 
         &:has(.banner) .title span {
-            margin-top: 2rem;
+            margin-top: 1.8rem;
         }
 
-        .body {
+        .body,
+        .info {
             padding: 0 2rem;
             font-size: clamp(
                 var(--sl-text-sm),
@@ -112,7 +113,6 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
         .info {
             display: flex;
             justify-content: space-between;
-            padding: 0 2rem;
 
             > div {
                 display: flex;
@@ -130,7 +130,7 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
         }
 
         > :last-child {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.5em;
         }
     }
 </style>
