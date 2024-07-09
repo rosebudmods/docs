@@ -20,7 +20,7 @@ const { mod } = Astro.props;
 
 <slot />
 
-<article set:html={marked.parse(mod.body)} />
+<article set:html={marked.parse(mod.description)} />
 
 <style lang="scss">
     article :global(:first-child:is(h1)) {

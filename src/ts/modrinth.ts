@@ -1,3 +1,5 @@
+import { kebabToCamel } from './util';
+
 export type RequestedStatus =
     | 'approved'
     | 'archived'
@@ -12,25 +14,42 @@ export type Status =
     | 'scheduled'
     | 'unknown';
 
+export type LinkTypes = 'source' | 'wiki' | 'issues' | 'discord' | 'ko-fi';
+
 export type Project = {
-    slug: string;
-    title: string;
     id: string;
+    slug: string;
+    project_types: string[];
+    games: string[];
+    team_id: string;
+    organization?: string;
+
+    name: string;
+    summary: string;
     description: string;
-    project_type: 'mod' | 'modpack' | 'resourcepack' | 'shader';
     downloads: number;
     followers: number;
     icon_url?: string;
     color?: number;
 
-    body: string;
     categories: string[];
     additional_categories?: string[];
-    client_side: 'required' | 'optional' | 'unsupported';
-    server_side: 'required' | 'optional' | 'unsupported';
     versions: string[];
     game_versions: string[];
     loaders: string[];
+
+    singleplayer: boolean;
+    client_only: boolean;
+    server_only: boolean;
+    client_and_server: boolean;
+
+    link_urls: {
+        [K in LinkTypes]: {
+            platform: K;
+            donation: boolean;
+            url: string;
+        };
+    };
 
     gallery?: {
         url: string;
@@ -54,20 +73,8 @@ export type Project = {
 
     status: Status;
     requested_status?: RequestedStatus;
-
-    issues_url?: string;
-    source_url?: string;
-    wiki_url?: string;
-    discord_url?: string;
-    donation_urls?: {
-        id: string;
-        platform: string;
-        url: string;
-    }[];
-
-    thread_id?: string;
     monetization_status?: 'monetized' | 'demonetized' | 'force-demonetized';
-    team: string;
+    thread_id?: string;
 };
 
 export async function getProject(id: string): Promise<Project> {
@@ -80,9 +87,20 @@ export async function getProject(id: string): Promise<Project> {
     ).json();
 }
 
-export const mods = {
-    rainglow: await getProject('Bk6pUD7R'), // rainglow
-    berries: await getProject('KEFyvbuH'), // bodacious berries
-    ramel: await getProject('4Uw92C2y'), // ramel
-    skinOverrides: await getProject('GON0Fdk5'), // skin overrides
-};
+export async function getOrgProjects(id: string): Promise<Project[]> {
+    return await (
+        await fetch(`https://api.modrinth.com/v3/organization/${id}/projects`, {
+            headers: {
+                'user-agent': 'rosebudmods/docs (orifu@duck.com)',
+            },
+        })
+    ).json();
+}
+
+export const projects = await getOrgProjects('rosebud');
+
+export const mods = Object.fromEntries(
+    projects.map((proj) => [kebabToCamel(proj.slug), proj]),
+);
+
+console.log(mods);

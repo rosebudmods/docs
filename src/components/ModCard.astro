@@ -17,19 +17,19 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
         <img
             class="icon"
             src={mod.icon_url}
-            alt=`Icon for ${mod.title}`
+            alt=`Icon for ${mod.name}`
         />
-        <span>{mod.title}</span>
+        <span>{mod.name}</span>
         {!extended && <a class="filling" href=`/${mod.slug}/` />}
     </p>
-    <div class="body">{mod.description}</div>
+    <div class="body">{mod.summary}</div>
     {extended && <div class="info">
         <div>
-            <span><b>{mod.client_side}</b> on client, <b>{mod.server_side}</b> on server</span>
+            <span><b>{mod.singleplayer}</b> on client, <b>{mod.server_only}</b> on server</span>
             <span>released for <b>{mod.game_versions[0]}</b>&mdash;<b>{mod.game_versions.at(-1)}</b></span>
             <span>
-                <a href={mod.source_url}>sources</a> &bull;
-                <a href={mod.issues_url}>issues</a>
+                <a href={mod.link_urls.source?.url}>sources</a> &bull;
+                <a href={mod.link_urls.issues?.url}>issues</a>
             </span>
         </div>
         <div class="stats">

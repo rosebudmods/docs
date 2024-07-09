@@ -6,3 +6,6 @@ export function formatNumber(i: number): string {
     }
     return out.slice(0, -1).replace(/^0+/, '');
 }
+
+export const kebabToCamel = (s: string) =>
+    s.replaceAll(/-(.)/g, (_, c) => c.toUpperCase());
