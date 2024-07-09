@@ -1,9 +1,23 @@
 ---
 import { CardGrid } from '@astrojs/starlight/components';
 import ModCard from './ModCard.astro';
-import { mods } from '@ts/modrinth';
+import { modsList } from '@ts/modrinth';
+
+interface Props {
+    wide?: boolean;
+}
+
+const { wide = false } = Astro.props;
 ---
 
-<CardGrid>
-    {Object.values(mods).map((mod) => <ModCard {mod} />)}
-</CardGrid>
+{
+    wide ? (
+        modsList.map((mod) => <ModCard {mod} />)
+    ) : (
+        <CardGrid>
+            {modsList.map((mod) => (
+                <ModCard {mod} />
+            ))}
+        </CardGrid>
+    )
+}

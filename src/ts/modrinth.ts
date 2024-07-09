@@ -102,3 +102,9 @@ export const projects = await getOrgProjects('rosebud');
 export const mods = Object.fromEntries(
     projects.map((proj) => [kebabToCamel(proj.slug), proj]),
 );
+export const modsList = [
+    mods.rainglow!,
+    mods.berries!,
+    mods.ramel!,
+    mods.skinOverrides!,
+];
