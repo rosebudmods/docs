@@ -26,6 +26,14 @@ export default defineConfig({
                     label: 'bodacious berries',
                     autogenerate: { directory: 'berries' },
                 },
+                {
+                    label: 'ramel',
+                    autogenerate: { directory: 'ramel' },
+                },
+                {
+                    label: 'skin overrides',
+                    autogenerate: { directory: 'skin-overrides' },
+                },
             ],
         }),
     ],
