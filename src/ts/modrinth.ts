@@ -38,10 +38,10 @@ export type Project = {
     game_versions: string[];
     loaders: string[];
 
-    singleplayer: boolean;
-    client_only: boolean;
-    server_only: boolean;
-    client_and_server: boolean;
+    singleplayer: boolean[];
+    client_only: boolean[];
+    server_only: boolean[];
+    client_and_server: boolean[];
 
     link_urls: {
         [K in LinkTypes]: {

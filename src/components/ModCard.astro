@@ -1,6 +1,6 @@
 ---
 import type { Project } from '@ts/modrinth';
-import { formatNumber } from '@ts/util';
+import { formatNumber, formatProjectSides } from '@ts/util';
 
 interface Props {
     mod: Project;
@@ -25,7 +25,7 @@ const banner = mod.gallery?.filter((g) => g.featured)[0];
     <div class="body">{mod.summary}</div>
     {extended && <div class="info">
         <div>
-            <span><b>{mod.singleplayer}</b> on client, <b>{mod.server_only}</b> on server</span>
+            <span><b>{formatProjectSides(mod)}</b></span>
             <span>released for <b>{mod.game_versions[0]}</b>&mdash;<b>{mod.game_versions.at(-1)}</b></span>
             <span>
                 <a href={mod.link_urls.source?.url}>sources</a> &bull;
