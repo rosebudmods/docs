@@ -78,9 +78,11 @@ export type ItemInfo =
           cuboids: Cuboid[];
       };
 
-export type Cuboid = {
+export type CuboidCoords = {
     [K in 'x' | 'y' | 'z' | 'w' | 'h' | 'd']: number;
-} & {
+};
+
+export type Cuboid = CuboidCoords & {
     textures: {
         [K in 'top' | 'front' | 'side']?: {
             path: string;
@@ -132,18 +134,22 @@ export function itemInfo(
         type: 'block',
         cuboids: elements
             .map((el) => {
-                const cuboidTex: Cuboid['textures'] = {};
-                applyCuboidTexture(cuboidTex, 'top', textures, el);
-                applyCuboidTexture(cuboidTex, 'front', textures, el);
-                applyCuboidTexture(cuboidTex, 'side', textures, el);
-
-                return {
-                    x: el.from[0],
+                const coords = {
+                    x: 16 - el.to[0],
                     y: el.from[1],
-                    z: el.from[2],
+                    z: 16 - el.to[2],
                     w: el.to[0] - el.from[0],
                     h: el.to[1] - el.from[1],
                     d: el.to[2] - el.from[2],
+                };
+
+                const cuboidTex: Cuboid['textures'] = {};
+                applyCuboidTexture(cuboidTex, 'top', textures, el, coords);
+                applyCuboidTexture(cuboidTex, 'front', textures, el, coords);
+                applyCuboidTexture(cuboidTex, 'side', textures, el, coords);
+
+                return {
+                    ...coords,
                     textures: cuboidTex,
                 };
             })
@@ -157,6 +163,7 @@ function applyCuboidTexture(
     key: keyof Cuboid['textures'],
     textures: Textures,
     el: Element,
+    p: CuboidCoords,
 ) {
     const faceKey = key === 'top' ? 'up' : key === 'front' ? 'east' : 'north';
     const face = el.faces[faceKey];
@@ -164,11 +171,12 @@ function applyCuboidTexture(
     if (face) {
         let [faceX1, faceY1, faceX2, faceY2] =
             key === 'top'
-                ? [16 - el.to[0], el.from[2], 16 - el.from[0], el.to[2]]
+                ? [p.x, p.z, p.x + p.w, p.z + p.d]
                 : key === 'front'
-                  ? [el.from[2], el.from[1], el.to[2], el.to[1]]
-                  : [el.from[0], el.from[1], el.to[0], el.to[1]];
+                  ? [p.z, p.y, p.z + p.d, p.y + p.h]
+                  : [p.x, p.y, p.x + p.w, p.y + p.h];
         [faceY1, faceY2] = [16 - faceY2, 16 - faceY1];
+        if (key === 'top') [faceX1, faceX2] = [16 - faceX2, 16 - faceX1];
 
         const u1 = face.uv ? Math.min(face.uv[0], face.uv[2]) : faceX1;
         const u2 = face.uv ? Math.max(face.uv[0], face.uv[2]) : faceX2;
