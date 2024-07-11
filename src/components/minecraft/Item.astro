@@ -5,14 +5,15 @@ import Block from './Block.astro';
 
 interface Props {
     id: string;
+    type?: 'item' | 'block';
 }
 
-const { id } = Astro.props;
+const { id, type } = Astro.props;
 
 const assets = import.meta.glob<{ default: ImageMetadata }>(
     '/src/assets/mc-assets/assets/minecraft/textures/*/*.png',
 );
-const info = itemInfo(id);
+const info = itemInfo(id, type);
 ---
 
 {

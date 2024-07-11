@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import decompress from 'decompress';
-import type { Element, Face, Model, Textures } from './minecraftTypes';
+import type { Element, Model, Textures } from './minecraftTypes';
 
 const path = 'src/assets/mc-assets';
 
@@ -99,8 +99,11 @@ export type Cuboid = {
 
 export type CuboidTextures = NonNullable<Cuboid['textures']['top']>;
 
-export function itemInfo(id: string): ItemInfo {
-    let info = readModel('item', id);
+export function itemInfo(
+    id: string,
+    type: 'item' | 'block' = 'item',
+): ItemInfo {
+    let info = readModel(type, id);
     let textures: Textures = {};
     let elements: Element[] = [];
 
@@ -127,22 +130,25 @@ export function itemInfo(id: string): ItemInfo {
 
     return {
         type: 'block',
-        cuboids: elements.map((el) => {
-            const cuboidTex: Cuboid['textures'] = {};
-            applyCuboidTexture(cuboidTex, 'top', textures, el.faces.up);
-            applyCuboidTexture(cuboidTex, 'front', textures, el.faces.east);
-            applyCuboidTexture(cuboidTex, 'side', textures, el.faces.north);
+        cuboids: elements
+            .map((el) => {
+                const cuboidTex: Cuboid['textures'] = {};
+                applyCuboidTexture(cuboidTex, 'top', textures, el);
+                applyCuboidTexture(cuboidTex, 'front', textures, el);
+                applyCuboidTexture(cuboidTex, 'side', textures, el);
 
-            return {
-                x: el.from[0],
-                y: el.from[1],
-                z: el.from[2],
-                w: el.to[0] - el.from[0],
-                h: el.to[1] - el.from[1],
-                d: el.to[2] - el.from[2],
-                textures: cuboidTex,
-            };
-        }),
+                return {
+                    x: el.from[0],
+                    y: el.from[1],
+                    z: el.from[2],
+                    w: el.to[0] - el.from[0],
+                    h: el.to[1] - el.from[1],
+                    d: el.to[2] - el.from[2],
+                    textures: cuboidTex,
+                };
+            })
+            .sort((c1, c2) => c2.x - c2.z - c1.x + c1.z)
+            .sort((c1, c2) => c1.y + c1.h / 2 - c2.y - c2.h / 2),
     };
 }
 
@@ -150,13 +156,24 @@ function applyCuboidTexture(
     cuboidTextures: Cuboid['textures'],
     key: keyof Cuboid['textures'],
     textures: Textures,
-    face?: Face,
+    el: Element,
 ) {
+    const faceKey = key === 'top' ? 'up' : key === 'front' ? 'east' : 'north';
+    const face = el.faces[faceKey];
+
     if (face) {
-        const u1 = face.uv ? Math.min(face.uv[0], face.uv[2]) : 0;
-        const u2 = face.uv ? Math.max(face.uv[0], face.uv[2]) : 16;
-        const v1 = face.uv ? Math.min(face.uv[1], face.uv[3]) : 0;
-        const v2 = face.uv ? Math.max(face.uv[1], face.uv[3]) : 16;
+        let [faceX1, faceY1, faceX2, faceY2] =
+            key === 'top'
+                ? [16 - el.to[0], el.from[2], 16 - el.from[0], el.to[2]]
+                : key === 'front'
+                  ? [el.from[2], el.from[1], el.to[2], el.to[1]]
+                  : [el.from[0], el.from[1], el.to[0], el.to[1]];
+        [faceY1, faceY2] = [16 - faceY2, 16 - faceY1];
+
+        const u1 = face.uv ? Math.min(face.uv[0], face.uv[2]) : faceX1;
+        const u2 = face.uv ? Math.max(face.uv[0], face.uv[2]) : faceX2;
+        const v1 = face.uv ? Math.min(face.uv[1], face.uv[3]) : faceY1;
+        const v2 = face.uv ? Math.max(face.uv[1], face.uv[3]) : faceY2;
 
         cuboidTextures[key] = {
             path: pathFromFace(textures, face.texture),
