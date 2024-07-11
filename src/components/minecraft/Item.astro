@@ -21,6 +21,7 @@ const info = itemInfo(id, type);
         <Image
             src={assets[info.texture]!()}
             alt={id.replaceAll('_', ' ')}
+            format="png"
             class="img"
         />
     ) : (
