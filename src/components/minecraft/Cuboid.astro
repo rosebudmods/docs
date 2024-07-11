@@ -1,0 +1,70 @@
+---
+import type { Cuboid } from '@ts/minecraft';
+
+interface Props {
+    cuboid: Cuboid;
+}
+
+const {
+    cuboid: { x, y, z, w, h, d, textures },
+} = Astro.props;
+
+const assets = import.meta.glob<{ default: ImageMetadata }>(
+    '/src/assets/mc-assets/assets/minecraft/textures/block/*.png',
+);
+const getAsset = async (path: string) => (await assets[path]!()).default.src;
+const topStyle =
+    textures.top && `background: url(${await getAsset(textures.top)})`;
+const frnStyle =
+    textures.front && `background: url(${await getAsset(textures.front)})`;
+const sdeStyle =
+    textures.side && `background: url(${await getAsset(textures.side)})`;
+---
+
+<span class="cuboid">
+    {topStyle && <span class="face top" style={topStyle} />}
+    {frnStyle && <span class="face front" style={frnStyle} />}
+    {sdeStyle && <span class="face side" style={sdeStyle} />}
+</span>
+
+<style lang="scss">
+    .cuboid {
+        display: inline-block;
+        position: absolute;
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+    }
+
+    .face {
+        position: absolute;
+        left: 0.5em;
+        width: 1em;
+        height: 1em;
+        margin: 0 !important;
+        background-size: 100% 100%;
+        image-rendering: pixelated;
+        transform-origin: 50% 50%;
+
+        // change to 60deg for an isometric perspective
+        // (no i dont understand the matrices either)
+        $a: 65deg;
+
+        &.top {
+            transform: translateY(-50%)
+                matrix(calc(sin($a) * -1), 0.5, calc(sin($a) * -1), -0.5, 0, 0);
+        }
+
+        &.front {
+            filter: brightness(0.6);
+            transform: translate(calc(-50% * sin($a)), 25%)
+                matrix(sin($a), 0.5, 0, 1, 0, 0);
+        }
+
+        &.side {
+            filter: brightness(0.4);
+            transform: translate(calc(50% * sin($a)), 25%)
+                matrix(sin($a), -0.5, 0, 1, 0, 0);
+        }
+    }
+</style>

@@ -1,66 +1,23 @@
 ---
-import type { BlockTextures } from '@ts/minecraft';
+import type { Cuboid } from '@ts/minecraft';
+import CuboidComponent from './Cuboid.astro';
 
 interface Props {
-    textures: BlockTextures;
+    cuboids: Cuboid[];
 }
 
-const { textures } = Astro.props;
-
-const assets = import.meta.glob<{ default: ImageMetadata }>(
-    '/src/assets/mc-assets/assets/minecraft/textures/block/*.png',
-);
-const getAsset = async (path: string) => (await assets[path]!()).default.src;
-const topStyle = `background: url(${await getAsset(textures.top)})`;
-const frnStyle = `background: url(${await getAsset(textures.front)})`;
-const sdeStyle = `background: url(${await getAsset(textures.side)})`;
+const { cuboids } = Astro.props;
 ---
 
 <span class="block">
-    <span class="face top" style={topStyle}></span>
-    <span class="face front" style={frnStyle}></span>
-    <span class="face side" style={sdeStyle}></span>
+    {cuboids.map((cuboid) => <CuboidComponent {cuboid} />)}
 </span>
 
 <style lang="scss">
     .block {
-        display: inline-block;
-        margin: 0 !important;
-        position: relative;
+        display: inline-flex;
         vertical-align: middle;
         width: 2em;
         height: 1em;
-    }
-
-    .face {
-        position: absolute;
-        left: 0.5em;
-        width: 1em;
-        height: 1em;
-        margin: 0 !important;
-        background-size: 100% 100%;
-        image-rendering: pixelated;
-        transform-origin: 50% 50%;
-
-        // change to 60deg for an isometric perspective
-        // (no i dont understand the matrices either)
-        $a: 65deg;
-
-        &.top {
-            transform: translateY(-50%)
-                matrix(calc(sin($a) * -1), 0.5, calc(sin($a) * -1), -0.5, 0, 0);
-        }
-
-        &.front {
-            filter: brightness(0.6);
-            transform: translate(calc(-50% * sin($a)), 25%)
-                matrix(sin($a), 0.5, 0, 1, 0, 0);
-        }
-
-        &.side {
-            filter: brightness(0.4);
-            transform: translate(calc(50% * sin($a)), 25%)
-                matrix(sin($a), -0.5, 0, 1, 0, 0);
-        }
     }
 </style>

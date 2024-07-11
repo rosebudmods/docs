@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import decompress from 'decompress';
+import type { Element, Model, Textures } from './minecraftTypes';
 
 const path = 'src/assets/mc-assets';
 
@@ -22,28 +23,6 @@ if (!existsSync(path)) {
     console.log('downloaded! decompressing...');
     decompress(Buffer.from(jarFile), path);
 }
-
-type Model = {
-    parent: string;
-    textures?: {
-        // for items
-        layer0?: string;
-        layer1?: string;
-        layer2?: string;
-        // for blocks
-        particle?: string;
-        down?: string;
-        up?: string;
-        north?: string;
-        east?: string;
-        south?: string;
-        west?: string;
-        // what the hell mojang
-        top?: string;
-        bottom?: string;
-    };
-};
-type Textures = NonNullable<Model['textures']>;
 
 function parseIdentifier(id: string): [string | null, string] {
     if (id.includes(':')) {
@@ -79,8 +58,16 @@ function resolveTexture(textures: Textures, id: keyof Textures) {
     return textures[id]!;
 }
 
-function getTexturePath(id: string): string {
+function getTexturePath(id: string) {
     return `/${path}/assets/minecraft/textures/${parseIdentifier(id)[1]}.png`;
+}
+
+function pathFromFace(textures: Textures, id?: string) {
+    return id
+        ? getTexturePath(
+              resolveTexture(textures, id.substring(1) as keyof Textures)!,
+          )
+        : id;
 }
 
 export type ItemInfo =
@@ -90,25 +77,36 @@ export type ItemInfo =
       }
     | {
           type: 'block';
-          textures: BlockTextures;
+          cuboids: Cuboid[];
       };
 
-export type BlockTextures = {
-    top: string;
-    front: string;
-    side: string;
+export type Cuboid = {
+    [K in 'x' | 'y' | 'z' | 'w' | 'h' | 'd']: number;
+} & {
+    textures: {
+        top: string | undefined;
+        front: string | undefined;
+        side: string | undefined;
+    };
 };
 
 export function itemInfo(id: string): ItemInfo {
     let info = readModel('item', id);
     let textures: Textures = {};
+    let elements: Element[] = [];
 
     while (true) {
         if (info.textures) {
             textures = { ...textures, ...info.textures };
         }
+        if (info.elements) {
+            elements = [...elements, ...info.elements];
+        }
 
-        if (parseIdentifier(info.parent)[0] === null) {
+        if (
+            !info.parent ||
+            parseIdentifier(info.parent)[1].startsWith('builtin')
+        ) {
             break;
         }
         info = readModelFromIdentifier(info.parent);
@@ -120,13 +118,18 @@ export function itemInfo(id: string): ItemInfo {
 
     return {
         type: 'block',
-        textures: {
-            top: getTexturePath(
-                resolveTexture(textures, 'up') ??
-                    resolveTexture(textures, 'top')!,
-            ),
-            front: getTexturePath(resolveTexture(textures, 'east')!),
-            side: getTexturePath(resolveTexture(textures, 'north')!),
-        },
+        cuboids: elements.map((el) => ({
+            x: el.from[0],
+            y: el.from[1],
+            z: el.from[2],
+            w: el.to[0] - el.from[0],
+            h: el.to[1] - el.from[1],
+            d: el.to[2] - el.from[2],
+            textures: {
+                top: pathFromFace(textures, el.faces.up?.texture),
+                front: pathFromFace(textures, el.faces.east?.texture),
+                side: pathFromFace(textures, el.faces.north?.texture),
+            },
+        })),
     };
 }

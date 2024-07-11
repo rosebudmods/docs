@@ -40,7 +40,7 @@ export default defineConfig({
     vite: {
         server: {
             watch: {
-                ignored: 'src/assets/mc-assets/',
+                ignored: process.cwd() + '/src/assets/mc-assets/**/*',
             },
         },
     },
