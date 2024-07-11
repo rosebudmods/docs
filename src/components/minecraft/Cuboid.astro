@@ -17,12 +17,12 @@ const src = async (path?: string) =>
 
 const rot = (deg?: number) =>
     deg === 90
-        ? 'rotate(90deg) translateX(-1em)'
+        ? 'rotate(90deg) translateZ(-1em)'
         : deg === 180
           ? 'rotate(180deg) translate(-1em, -1em)'
           : deg === 270
-            ? 'rotate(270deg) translateY(-1em)'
-            : 'scale(1)'; // noop
+            ? 'rotate(270deg) translateX(-1em)'
+            : 'scale(1)'; // no-op
 ---
 
 <span class="cuboid">
@@ -50,7 +50,7 @@ const rot = (deg?: number) =>
 >
     .cuboid {
         display: inline-block;
-        position: relative;
+        position: absolute;
         vertical-align: middle;
         width: calc(cos(45deg) * 2em);
         height: 1em;
@@ -76,8 +76,8 @@ const rot = (deg?: number) =>
             transform: var(--transform) scaleX(var(--zScale))
                 scaleY(var(--yScale))
                 translate3d(
-                    calc(-1 * var(--z)),
-                    calc(-1em - var(--y)),
+                    calc(var(--z) / var(--zScale)),
+                    calc(-1em - var(--y) / var(--yScale)),
                     calc(-1 * var(--x))
                 )
                 var(--fntRot);
@@ -90,9 +90,9 @@ const rot = (deg?: number) =>
             transform: var(--transform) scaleX(var(--zScale))
                 scaleZ(var(--xScale))
                 translate3d(
-                    calc(1em - var(--z)),
+                    calc(1em + var(--z) / var(--zScale)),
                     calc(-1em * var(--yScale) - var(--y)),
-                    calc(-1em - var(--x))
+                    calc(-1em - var(--x) / var(--xScale))
                 )
                 rotateX(90deg) rotateZ(90deg) var(--topRot);
         }
@@ -105,9 +105,9 @@ const rot = (deg?: number) =>
             transform: var(--transform) scaleZ(var(--xScale))
                 scaleY(var(--yScale))
                 translate3d(
-                    calc(1em * var(--zScale) - var(--z)),
-                    calc(-1em - var(--y)),
-                    calc(-1 * var(--x))
+                    calc(1em * var(--zScale) + var(--z)),
+                    calc(-1em - var(--y) / var(--yScale)),
+                    calc(-1 * var(--x) / var(--xScale))
                 )
                 rotateY(90deg) var(--sdeRot);
         }
