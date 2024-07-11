@@ -1,17 +1,9 @@
 ---
-import type { Cuboid, CuboidTextures } from '@ts/minecraft';
+import type { Cuboid } from '@ts/minecraft';
 
 interface Props {
     cuboid: Cuboid;
 }
-
-// change to 60deg for an isometric perspective
-// (no i dont understand the matrices either)
-const angle = (65 * Math.PI) / 180;
-const sin = Math.sin(angle);
-const tTop = `translateY(-50%) matrix(-${sin}, 0.5, -${sin}, -0.5, 0, 0)`;
-const tFrn = `translate(calc(-50% * ${sin}), 25%) matrix(${sin}, 0.5, 0, 1, 0, 0)`;
-const tSde = `translate(calc(50% * ${sin}), 25%) matrix(${sin}, -0.5, 0, 1, 0, 0)`;
 
 const {
     cuboid: { x, y, z, w, h, d, textures },
@@ -20,48 +12,104 @@ const {
 const assets = import.meta.glob<{ default: ImageMetadata }>(
     '/src/assets/mc-assets/assets/minecraft/textures/block/*.png',
 );
-const getAsset = async (path: string) => (await assets[path]!()).default.src;
-const fromTexture = async (transform: string, texture?: CuboidTextures) =>
-    texture &&
-    `transform: ${transform}${texture.rotation ? ` rotate(${texture.rotation}deg)` : ''};` +
-        `background: url(${await getAsset(texture.path)})`;
+const src = async (path?: string) =>
+    path ? 'url(' + (await assets[path]!()).default.src + ')' : undefined;
 
-const topStyle = await fromTexture(tTop, textures.top);
-const frnStyle = await fromTexture(tFrn, textures.front);
-const sdeStyle = await fromTexture(tSde, textures.side);
+const rot = (deg?: number) =>
+    deg === 90
+        ? 'rotate(90deg) translateX(-1em)'
+        : deg === 180
+          ? 'rotate(180deg) translate(-1em, -1em)'
+          : deg === 270
+            ? 'rotate(270deg) translateY(-1em)'
+            : 'scale(1)'; // noop
 ---
 
 <span class="cuboid">
-    {topStyle && <span class="face top" style={topStyle} />}
-    {frnStyle && <span class="face front" style={frnStyle} />}
-    {sdeStyle && <span class="face side" style={sdeStyle} />}
+    {textures.top && <span class="face y" />}
+    {textures.front && <span class="face x" />}
+    {textures.side && <span class="face z" />}
 </span>
 
-<style lang="scss">
+<style
+    lang="scss"
+    define:vars={{
+        x: `${x / 16}em`,
+        y: `${y / 16}em`,
+        z: `${z / 16}em`,
+        xScale: w / 16,
+        yScale: h / 16,
+        zScale: d / 16,
+        topTex: await src(textures.top?.path),
+        topRot: rot(textures.top?.rotation),
+        fntTex: await src(textures.front?.path),
+        fntRot: rot(textures.front?.rotation),
+        sdeTex: await src(textures.side?.path),
+        sdeRot: rot(textures.side?.rotation),
+    }}
+>
     .cuboid {
         display: inline-block;
-        position: absolute;
+        position: relative;
         vertical-align: middle;
-        width: 1em;
+        width: calc(cos(45deg) * 2em);
         height: 1em;
     }
 
     .face {
         position: absolute;
-        left: 0.5em;
         width: 1em;
         height: 1em;
+        top: calc(cos(30deg) * 1em);
         margin: 0 !important;
-        background-size: 100% 100%;
         image-rendering: pixelated;
-        transform-origin: 50% 50%;
+        backface-visibility: hidden;
 
-        &.front {
+        --transform: rotateX(-30deg) rotateY(-45deg);
+        transform-origin: 0 0;
+
+        &.x {
+            background: var(--fntTex);
+            background-size: 100% 100%;
             filter: brightness(0.6);
+
+            transform: var(--transform) scaleX(var(--zScale))
+                scaleY(var(--yScale))
+                translate3d(
+                    calc(-1 * var(--z)),
+                    calc(-1em - var(--y)),
+                    calc(-1 * var(--x))
+                )
+                var(--fntRot);
         }
 
-        &.side {
+        &.y {
+            background: var(--topTex);
+            background-size: 100% 100%;
+
+            transform: var(--transform) scaleX(var(--zScale))
+                scaleZ(var(--xScale))
+                translate3d(
+                    calc(1em - var(--z)),
+                    calc(-1em * var(--yScale) - var(--y)),
+                    calc(-1em - var(--x))
+                )
+                rotateX(90deg) rotateZ(90deg) var(--topRot);
+        }
+
+        &.z {
+            background: var(--sdeTex);
+            background-size: 100% 100%;
             filter: brightness(0.4);
+
+            transform: var(--transform) scaleZ(var(--xScale))
+                scaleY(var(--yScale))
+                translate3d(
+                    calc(1em * var(--zScale) - var(--z)),
+                    calc(-1em - var(--y)),
+                    calc(-1 * var(--x))
+                )
+                rotateY(90deg) var(--sdeRot);
         }
     }
 </style>
