@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import decompress from 'decompress';
-import type { Element, Model, Textures } from './minecraftTypes';
+import type { Element, Faces, Model, Textures } from './minecraftTypes';
 
 const path = 'src/assets/mc-assets';
 
@@ -80,6 +80,8 @@ export type ItemInfo =
 
 export type CuboidCoords = {
     [K in 'x' | 'y' | 'z' | 'w' | 'h' | 'd']: number;
+} & {
+    inner: boolean;
 };
 
 export type Cuboid = CuboidCoords & {
@@ -142,7 +144,12 @@ export function itemInfo(
                     w: el.to[0] - el.from[0],
                     h: el.to[1] - el.from[1],
                     d: el.to[2] - el.from[2],
+                    inner: el.from[0] > el.to[0],
                 };
+                if (coords.inner) {
+                    coords.x = 16 - coords.x;
+                    coords.w = Math.abs(coords.w);
+                }
 
                 const cuboidTex: Cuboid['textures'] = {};
                 applyCuboidTexture(cuboidTex, 'top', textures, el, coords);
@@ -159,6 +166,12 @@ export function itemInfo(
     };
 }
 
+const faceKeys: Record<keyof Cuboid['textures'], [Faces, Faces]> = {
+    top: ['up', 'down'],
+    front: ['east', 'west'],
+    side: ['north', 'south'],
+};
+
 function applyCuboidTexture(
     cuboidTextures: Cuboid['textures'],
     key: keyof Cuboid['textures'],
@@ -166,7 +179,7 @@ function applyCuboidTexture(
     el: Element,
     p: CuboidCoords,
 ) {
-    const faceKey = key === 'top' ? 'up' : key === 'front' ? 'east' : 'north';
+    const faceKey = faceKeys[key][p.inner ? 1 : 0];
     const face = el.faces[faceKey];
 
     if (face) {

@@ -44,21 +44,22 @@ const yScale = h / 16;
 const zScale = d / 16;
 
 // DO NOT TOUCH! (unless you want a headache)
+let inner = cuboid.inner ? 1 : 0;
 let xTransform = `var(--transform) scaleX(${zScale}) scaleY(${yScale})
 translate3d(
     ${z / zScale}em,
     ${-1 - y / yScale}em,
-    ${-x}em
+    ${-x - inner}em
 ) ${rot(textures.front?.rotation)}`;
 let yTransform = `var(--transform) scaleX(${zScale}) scaleZ(${xScale})
 translate3d(
     ${1 + z / zScale}em,
-    ${-yScale - y}em,
+    ${-yScale - y + inner}em,
     ${-1 - x / xScale}em
 ) rotateX(90deg) rotateZ(90deg) ${rot(textures.top?.rotation)}`;
 let zTransform = `var(--transform) scaleZ(${xScale}) scaleY(${yScale})
 translate3d(
-    ${zScale + z}em,
+    ${zScale + z - inner}em,
     ${-1 - y / yScale}em,
     ${-x / xScale}em
 ) rotateY(90deg) ${rot(textures.side?.rotation)}`;
