@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import decompress from 'decompress';
-import type { Element, Model, Textures } from './minecraftTypes';
+import type { Element, Face, Model, Textures } from './minecraftTypes';
 
 const path = 'src/assets/mc-assets';
 
@@ -62,12 +62,10 @@ function getTexturePath(id: string) {
     return `/${path}/assets/minecraft/textures/${parseIdentifier(id)[1]}.png`;
 }
 
-function pathFromFace(textures: Textures, id?: string) {
-    return id
-        ? getTexturePath(
-              resolveTexture(textures, id.substring(1) as keyof Textures)!,
-          )
-        : id;
+function pathFromFace(textures: Textures, id: string) {
+    return getTexturePath(
+        resolveTexture(textures, id.substring(1) as keyof Textures)!,
+    );
 }
 
 export type ItemInfo =
@@ -84,11 +82,14 @@ export type Cuboid = {
     [K in 'x' | 'y' | 'z' | 'w' | 'h' | 'd']: number;
 } & {
     textures: {
-        top: string | undefined;
-        front: string | undefined;
-        side: string | undefined;
+        [K in 'top' | 'front' | 'side']?: {
+            path: string;
+            rotation: number;
+        };
     };
 };
+
+export type CuboidTextures = NonNullable<Cuboid['textures']['top']>;
 
 export function itemInfo(id: string): ItemInfo {
     let info = readModel('item', id);
@@ -118,18 +119,35 @@ export function itemInfo(id: string): ItemInfo {
 
     return {
         type: 'block',
-        cuboids: elements.map((el) => ({
-            x: el.from[0],
-            y: el.from[1],
-            z: el.from[2],
-            w: el.to[0] - el.from[0],
-            h: el.to[1] - el.from[1],
-            d: el.to[2] - el.from[2],
-            textures: {
-                top: pathFromFace(textures, el.faces.up?.texture),
-                front: pathFromFace(textures, el.faces.east?.texture),
-                side: pathFromFace(textures, el.faces.north?.texture),
-            },
-        })),
+        cuboids: elements.map((el) => {
+            const cuboidTex: Cuboid['textures'] = {};
+            applyCuboidTexture(cuboidTex, 'top', textures, el.faces.up);
+            applyCuboidTexture(cuboidTex, 'front', textures, el.faces.east);
+            applyCuboidTexture(cuboidTex, 'side', textures, el.faces.north);
+
+            return {
+                x: el.from[0],
+                y: el.from[1],
+                z: el.from[2],
+                w: el.to[0] - el.from[0],
+                h: el.to[1] - el.from[1],
+                d: el.to[2] - el.from[2],
+                textures: cuboidTex,
+            };
+        }),
     };
+}
+
+function applyCuboidTexture(
+    cuboidTextures: Cuboid['textures'],
+    key: keyof Cuboid['textures'],
+    textures: Textures,
+    face?: Face,
+) {
+    if (face) {
+        cuboidTextures[key] = {
+            path: pathFromFace(textures, face.texture),
+            rotation: face.rotation ?? 0,
+        };
+    }
 }

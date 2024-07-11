@@ -1,4 +1,4 @@
-export type Face = 'up' | 'down' | 'north' | 'south' | 'west' | 'east';
+export type Faces = 'up' | 'down' | 'north' | 'south' | 'west' | 'east';
 export type Model = {
     parent?: string;
     textures?: {
@@ -22,7 +22,7 @@ export type Model = {
         from: [number, number, number];
         to: [number, number, number];
         faces: {
-            [K in Face]?: {
+            [K in Faces]?: {
                 uv: [number, number, number, number];
                 texture: string;
                 rotation?: number;
@@ -33,3 +33,4 @@ export type Model = {
 
 export type Textures = NonNullable<Model['textures']>;
 export type Element = NonNullable<Model['elements']>[number];
+export type Face = NonNullable<Element['faces'][Faces]>;

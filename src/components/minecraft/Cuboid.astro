@@ -1,9 +1,17 @@
 ---
-import type { Cuboid } from '@ts/minecraft';
+import type { Cuboid, CuboidTextures } from '@ts/minecraft';
 
 interface Props {
     cuboid: Cuboid;
 }
+
+// change to 60deg for an isometric perspective
+// (no i dont understand the matrices either)
+const angle = (65 * Math.PI) / 180;
+const sin = Math.sin(angle);
+const tTop = `translateY(-50%) matrix(-${sin}, 0.5, -${sin}, -0.5, 0, 0)`;
+const tFrn = `translate(calc(-50% * ${sin}), 25%) matrix(${sin}, 0.5, 0, 1, 0, 0)`;
+const tSde = `translate(calc(50% * ${sin}), 25%) matrix(${sin}, -0.5, 0, 1, 0, 0)`;
 
 const {
     cuboid: { x, y, z, w, h, d, textures },
@@ -13,12 +21,14 @@ const assets = import.meta.glob<{ default: ImageMetadata }>(
     '/src/assets/mc-assets/assets/minecraft/textures/block/*.png',
 );
 const getAsset = async (path: string) => (await assets[path]!()).default.src;
-const topStyle =
-    textures.top && `background: url(${await getAsset(textures.top)})`;
-const frnStyle =
-    textures.front && `background: url(${await getAsset(textures.front)})`;
-const sdeStyle =
-    textures.side && `background: url(${await getAsset(textures.side)})`;
+const fromTexture = async (transform: string, texture?: CuboidTextures) =>
+    texture &&
+    `transform: ${transform}${texture.rotation ? ` rotate(${texture.rotation}deg)` : ''};` +
+        `background: url(${await getAsset(texture.path)})`;
+
+const topStyle = await fromTexture(tTop, textures.top);
+const frnStyle = await fromTexture(tFrn, textures.front);
+const sdeStyle = await fromTexture(tSde, textures.side);
 ---
 
 <span class="cuboid">
@@ -46,25 +56,12 @@ const sdeStyle =
         image-rendering: pixelated;
         transform-origin: 50% 50%;
 
-        // change to 60deg for an isometric perspective
-        // (no i dont understand the matrices either)
-        $a: 65deg;
-
-        &.top {
-            transform: translateY(-50%)
-                matrix(calc(sin($a) * -1), 0.5, calc(sin($a) * -1), -0.5, 0, 0);
-        }
-
         &.front {
             filter: brightness(0.6);
-            transform: translate(calc(-50% * sin($a)), 25%)
-                matrix(sin($a), 0.5, 0, 1, 0, 0);
         }
 
         &.side {
             filter: brightness(0.4);
-            transform: translate(calc(50% * sin($a)), 25%)
-                matrix(sin($a), -0.5, 0, 1, 0, 0);
         }
     }
 </style>
