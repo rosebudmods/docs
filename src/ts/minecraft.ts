@@ -125,8 +125,8 @@ export function itemInfo(id: string): ItemInfo {
                 resolveTexture(textures, 'up') ??
                     resolveTexture(textures, 'top')!,
             ),
-            front: getTexturePath(resolveTexture(textures, 'north')!),
-            side: getTexturePath(resolveTexture(textures, 'west')!),
+            front: getTexturePath(resolveTexture(textures, 'east')!),
+            side: getTexturePath(resolveTexture(textures, 'north')!),
         },
     };
 }

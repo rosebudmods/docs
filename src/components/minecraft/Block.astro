@@ -48,7 +48,7 @@ const sdeStyle = `background: url(${await getAsset(textures.side)})`;
 
         &.top {
             transform: translateY(-50%)
-                matrix(sin($a), -0.5, sin($a), 0.5, 0, 0);
+                matrix(calc(sin($a) * -1), 0.5, calc(sin($a) * -1), -0.5, 0, 0);
         }
 
         &.front {
