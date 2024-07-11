@@ -118,6 +118,7 @@ export function itemInfo(
         }
 
         if (
+            info.elements ||
             !info.parent ||
             parseIdentifier(info.parent)[1].startsWith('builtin')
         ) {
@@ -154,7 +155,7 @@ export function itemInfo(
                 };
             })
             .sort((c1, c2) => c2.x - c2.z - c1.x + c1.z)
-            .sort((c1, c2) => c1.y + c1.h / 2 - c2.y - c2.h / 2),
+            .sort((c1, c2) => c1.y + c1.h - c2.y - c2.h),
     };
 }
 

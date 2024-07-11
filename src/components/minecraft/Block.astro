@@ -16,11 +16,13 @@ const { cuboids } = Astro.props;
 <style lang="scss">
     .block {
         display: inline-flex;
-        position: relative;
-        justify-content: center;
         vertical-align: middle;
-        width: 1.5em;
-        height: 1em;
+
+        position: relative;
+        width: calc(cos(45deg) * 2em);
+        height: calc(cos(30deg) * 1em);
+        margin: calc(cos(45deg) / 2 * 1em) 0;
+
         font-size: 1.25em;
     }
 </style>
