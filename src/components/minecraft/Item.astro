@@ -1,0 +1,42 @@
+---
+import { itemInfo } from '@ts/minecraft';
+import { Image } from 'astro:assets';
+import Block from './Block.astro';
+
+interface Props {
+    id: string;
+}
+
+const { id } = Astro.props;
+
+const assets = import.meta.glob<{ default: ImageMetadata }>(
+    '/src/assets/mc-assets/assets/minecraft/textures/item/*.png',
+);
+const info = itemInfo(id);
+---
+
+{
+    info.type === 'item' ? (
+        <Image
+            src={assets[info.texture]!()}
+            alt={id.replaceAll('_', ' ')}
+            class="img"
+        />
+    ) : (
+        <Block textures={info.textures} />
+    )
+}
+
+<style lang="scss">
+    .img {
+        display: inline-block !important;
+        margin: 0 !important;
+
+        font-size: 1.5em;
+        vertical-align: top;
+        image-rendering: pixelated;
+
+        width: 1em;
+        height: 1em;
+    }
+</style>

@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# minecraft files
+/src/assets/mc-assets
+
 # dependencies
 node_modules/
 

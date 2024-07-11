@@ -37,4 +37,11 @@ export default defineConfig({
             ],
         }),
     ],
+    vite: {
+        server: {
+            watch: {
+                ignored: 'src/assets/mc-assets/',
+            },
+        },
+    },
 });
