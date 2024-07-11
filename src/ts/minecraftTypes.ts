@@ -23,7 +23,7 @@ export type Model = {
         to: [number, number, number];
         faces: {
             [K in Faces]?: {
-                uv: [number, number, number, number];
+                uv?: [number, number, number, number];
                 texture: string;
                 rotation?: number;
             };

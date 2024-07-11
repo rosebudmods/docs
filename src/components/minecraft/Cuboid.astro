@@ -1,19 +1,31 @@
 ---
-import type { Cuboid } from '@ts/minecraft';
+import type { Cuboid, CuboidTextures } from '@ts/minecraft';
 
 interface Props {
     cuboid: Cuboid;
 }
 
-const {
-    cuboid: { x, y, z, w, h, d, textures },
-} = Astro.props;
+const { cuboid } = Astro.props;
+const { textures, w, h, d } = cuboid;
 
 const assets = import.meta.glob<{ default: ImageMetadata }>(
     '/src/assets/mc-assets/assets/minecraft/textures/block/*.png',
 );
 const src = async (path?: string) =>
-    path ? 'url(' + (await assets[path]!()).default.src + ')' : undefined;
+    path ? (await assets[path]!()).default.src : undefined;
+const tex = async (
+    texture?: CuboidTextures,
+): Promise<[string, string] | undefined> =>
+    texture
+        ? [
+              `url(${await src(texture.path)}) ` +
+                  `${(texture.uv.u * 100) / (16 - texture.uv.w) || 0}% ` +
+                  `${(texture.uv.v * 100) / (16 - texture.uv.h) || 0}%/` +
+                  `${1600 / texture.uv.w}% ${1600 / texture.uv.h}%`,
+              (texture.uv.flipHoriz ? 'scaleX(-1) translateX(-1em) ' : '') +
+                  (texture.uv.flipVerti ? 'scaleY(-1) translateY(-1em) ' : ''),
+          ]
+        : undefined;
 
 const rot = (deg?: number) =>
     deg === 90
@@ -23,6 +35,40 @@ const rot = (deg?: number) =>
           : deg === 270
             ? 'rotate(270deg) translateX(-1em)'
             : 'scale(1)'; // no-op
+
+const x = cuboid.x / 16;
+const y = cuboid.y / 16;
+const z = cuboid.z / 16;
+const xScale = w / 16;
+const yScale = h / 16;
+const zScale = d / 16;
+
+// DO NOT TOUCH! (unless you want a headache)
+let xTransform = `var(--transform) scaleX(${zScale}) scaleY(${yScale})
+translate3d(
+    ${z / zScale}em,
+    ${-1 - y / yScale}em,
+    ${-x}em
+) ${rot(textures.front?.rotation)}`;
+let yTransform = `var(--transform) scaleX(${zScale}) scaleZ(${xScale})
+translate3d(
+    ${1 + z / zScale}em,
+    ${-yScale - y}em,
+    ${-1 - x / xScale}em
+) rotateX(90deg) rotateZ(90deg) ${rot(textures.top?.rotation)}`;
+let zTransform = `var(--transform) scaleZ(${xScale}) scaleY(${yScale})
+translate3d(
+    ${zScale + z}em,
+    ${-1 - y / yScale}em,
+    ${-x / xScale}em
+) rotateY(90deg) ${rot(textures.side?.rotation)}`;
+
+const topTexture = await tex(textures.top);
+if (topTexture) yTransform += topTexture[1];
+const fntTexture = await tex(textures.front);
+if (fntTexture) xTransform += fntTexture[1];
+const sdeTexture = await tex(textures.side);
+if (sdeTexture) zTransform += sdeTexture[1];
 ---
 
 <span class="cuboid">
@@ -34,24 +80,17 @@ const rot = (deg?: number) =>
 <style
     lang="scss"
     define:vars={{
-        x: `${x / 16}em`,
-        y: `${y / 16}em`,
-        z: `${z / 16}em`,
-        xScale: w / 16,
-        yScale: h / 16,
-        zScale: d / 16,
-        topTex: await src(textures.top?.path),
-        topRot: rot(textures.top?.rotation),
-        fntTex: await src(textures.front?.path),
-        fntRot: rot(textures.front?.rotation),
-        sdeTex: await src(textures.side?.path),
-        sdeRot: rot(textures.side?.rotation),
+        xTransform,
+        yTransform,
+        zTransform,
+        topTexture: topTexture?.[0],
+        fntTexture: fntTexture?.[0],
+        sdeTexture: sdeTexture?.[0],
     }}
 >
     .cuboid {
         display: inline-block;
         position: absolute;
-        vertical-align: middle;
         width: calc(cos(45deg) * 2em);
         height: 1em;
     }
@@ -69,47 +108,23 @@ const rot = (deg?: number) =>
         transform-origin: 0 0;
 
         &.x {
-            background: var(--fntTex);
-            background-size: 100% 100%;
+            background: var(--fntTexture);
             filter: brightness(0.6);
 
-            transform: var(--transform) scaleX(var(--zScale))
-                scaleY(var(--yScale))
-                translate3d(
-                    calc(var(--z) / var(--zScale)),
-                    calc(-1em - var(--y) / var(--yScale)),
-                    calc(-1 * var(--x))
-                )
-                var(--fntRot);
+            transform: var(--xTransform);
         }
 
         &.y {
-            background: var(--topTex);
-            background-size: 100% 100%;
+            background: var(--topTexture);
 
-            transform: var(--transform) scaleX(var(--zScale))
-                scaleZ(var(--xScale))
-                translate3d(
-                    calc(1em + var(--z) / var(--zScale)),
-                    calc(-1em * var(--yScale) - var(--y)),
-                    calc(-1em - var(--x) / var(--xScale))
-                )
-                rotateX(90deg) rotateZ(90deg) var(--topRot);
+            transform: var(--yTransform);
         }
 
         &.z {
-            background: var(--sdeTex);
-            background-size: 100% 100%;
+            background: var(--sdeTexture);
             filter: brightness(0.4);
 
-            transform: var(--transform) scaleZ(var(--xScale))
-                scaleY(var(--yScale))
-                translate3d(
-                    calc(1em * var(--zScale) + var(--z)),
-                    calc(-1em - var(--y) / var(--yScale)),
-                    calc(-1 * var(--x) / var(--xScale))
-                )
-                rotateY(90deg) var(--sdeRot);
+            transform: var(--zTransform);
         }
     }
 </style>

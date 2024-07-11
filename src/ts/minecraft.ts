@@ -85,6 +85,14 @@ export type Cuboid = {
         [K in 'top' | 'front' | 'side']?: {
             path: string;
             rotation: number;
+            uv: {
+                u: number;
+                v: number;
+                w: number;
+                h: number;
+                flipHoriz: boolean;
+                flipVerti: boolean;
+            };
         };
     };
 };
@@ -145,9 +153,22 @@ function applyCuboidTexture(
     face?: Face,
 ) {
     if (face) {
+        const u1 = face.uv ? Math.min(face.uv[0], face.uv[2]) : 0;
+        const u2 = face.uv ? Math.max(face.uv[0], face.uv[2]) : 16;
+        const v1 = face.uv ? Math.min(face.uv[1], face.uv[3]) : 0;
+        const v2 = face.uv ? Math.max(face.uv[1], face.uv[3]) : 16;
+
         cuboidTextures[key] = {
             path: pathFromFace(textures, face.texture),
             rotation: face.rotation ?? 0,
+            uv: {
+                u: u1,
+                v: v1,
+                w: u2 - u1,
+                h: v2 - v1,
+                flipHoriz: face.uv ? face.uv[0] > face.uv[2] : false,
+                flipVerti: face.uv ? face.uv[1] > face.uv[3] : false,
+            },
         };
     }
 }
