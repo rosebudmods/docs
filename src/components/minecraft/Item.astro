@@ -21,7 +21,6 @@ const info = itemInfo(id, type);
         <img
             src={(await assets[info.texture]!()).default.src}
             alt={id.replaceAll('_', ' ')}
-            class="img"
             style={`font-size: ${size};`}
         />
     ) : (
@@ -30,7 +29,7 @@ const info = itemInfo(id, type);
 }
 
 <style lang="scss">
-    .img {
+    img {
         display: inline-block !important;
         margin: 0 !important;
 
@@ -39,5 +38,7 @@ const info = itemInfo(id, type);
 
         width: 1em;
         height: 1em;
+
+        user-select: none;
     }
 </style>

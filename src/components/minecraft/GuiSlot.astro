@@ -33,5 +33,14 @@ const style = `top: ${y + 7}em; left: ${x + 7}em; width: ${width}em; height: ${h
         box-sizing: content-box;
         border-image: var(--border) 1 fill / 1em;
         padding: 1em;
+
+        &:hover::after {
+            content: '';
+            display: block;
+            position: absolute;
+            inset: 1em;
+
+            background-color: #ffffff80;
+        }
     }
 </style>
