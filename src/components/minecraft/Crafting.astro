@@ -1,0 +1,41 @@
+---
+import Gui from './Gui.astro';
+import GuiSlot from './GuiSlot.astro';
+import arrowRight from '../../assets/arrow-right.png';
+import GuiIcon from './GuiIcon.astro';
+
+type Repeat3<T> = [T, T, T];
+
+interface Props {
+    a1?: string;
+    a2?: string;
+    a3?: string;
+    b1?: string;
+    b2?: string;
+    b3?: string;
+    c1?: string;
+    c2?: string;
+    c3?: string;
+
+    result?: string;
+}
+
+const p = Astro.props;
+const slots: Repeat3<Repeat3<string | undefined>> = [
+    [p.a1, p.a2, p.a3],
+    [p.b1, p.b2, p.b3],
+    [p.c1, p.c2, p.c3],
+];
+---
+
+<Gui width={116} height={54}>
+    {
+        slots.map((row, y) =>
+            row.map((item, x) => <GuiSlot {item} x={x * 18} y={y * 18} />),
+        )
+    }
+
+    <GuiSlot item={p.result} x={90} y={14} width={24} height={24} />
+
+    <GuiIcon img={arrowRight} x={54} y={18} />
+</Gui>

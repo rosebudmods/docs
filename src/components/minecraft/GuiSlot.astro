@@ -1,0 +1,37 @@
+---
+import { getImage } from 'astro:assets';
+import borderImageFile from '../../assets/slot.png';
+import Item from './Item.astro';
+
+interface Props {
+    item?: string | undefined;
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+}
+
+const { item, x = 0, y = 0, width = 16, height = 16 } = Astro.props;
+
+const borderImage = await getImage({ src: borderImageFile, format: 'png' });
+const style = `top: ${y + 7}em; left: ${x + 7}em; width: ${width}em; height: ${height}em`;
+---
+
+<div {style}>
+    {item && <Item id={item} size="16em" />}
+</div>
+
+<style lang="scss" define:vars={{ border: `url(${borderImage.src})` }}>
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin: 0;
+        position: absolute;
+
+        box-sizing: content-box;
+        border-image: var(--border) 1 fill / 1em;
+        padding: 1em;
+    }
+</style>

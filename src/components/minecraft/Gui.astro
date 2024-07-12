@@ -1,0 +1,32 @@
+---
+import { getImage } from 'astro:assets';
+import borderImageFile from '../../assets/gui.png';
+
+interface Props {
+    width: number;
+    height: number;
+}
+
+const { width, height } = Astro.props;
+
+const borderImage = await getImage({ src: borderImageFile, format: 'png' });
+const style = `width: ${width}em; height: ${height}em;`;
+---
+
+<div class="not-content" {style}>
+    <slot />
+</div>
+
+<style lang="scss" define:vars={{ border: `url(${borderImage.src})` }}>
+    div {
+        position: relative;
+
+        box-sizing: content-box;
+        border-image: var(--border) 4 fill / 3em;
+        image-rendering: pixelated;
+
+        padding: 7em;
+
+        font-size: 4px;
+    }
+</style>

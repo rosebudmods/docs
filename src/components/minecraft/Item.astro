@@ -1,14 +1,14 @@
 ---
 import { itemInfo } from '@ts/minecraft';
-import { Image } from 'astro:assets';
 import Block from './Block.astro';
 
 interface Props {
     id: string;
     type?: 'item' | 'block';
+    size?: string;
 }
 
-const { id, type } = Astro.props;
+const { id, type, size = '2em' } = Astro.props;
 
 const assets = import.meta.glob<{ default: ImageMetadata }>(
     '/src/assets/mc-assets/assets/minecraft/textures/*/*.png',
@@ -18,14 +18,14 @@ const info = itemInfo(id, type);
 
 {
     info.type === 'item' ? (
-        <Image
-            src={assets[info.texture]!()}
+        <img
+            src={(await assets[info.texture]!()).default.src}
             alt={id.replaceAll('_', ' ')}
-            format="png"
             class="img"
+            style={`font-size: ${size};`}
         />
     ) : (
-        <Block cuboids={info.cuboids} />
+        <Block cuboids={info.cuboids} {size} />
     )
 }
 
@@ -34,7 +34,6 @@ const info = itemInfo(id, type);
         display: inline-block !important;
         margin: 0 !important;
 
-        font-size: 2em;
         vertical-align: top;
         image-rendering: pixelated;
 

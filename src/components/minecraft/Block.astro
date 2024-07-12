@@ -4,12 +4,15 @@ import CuboidComponent from './Cuboid.astro';
 
 interface Props {
     cuboids: Cuboid[];
+    size?: string;
 }
 
-const { cuboids } = Astro.props;
+const { cuboids, size = '1em' } = Astro.props;
+
+const fontSize = `calc(${size} / ${1 + 0.34 + 0.37})`;
 ---
 
-<span class="block">
+<span class="block" style={`font-size: ${fontSize}`}>
     {cuboids.map((cuboid) => <CuboidComponent {cuboid} />)}
 </span>
 
@@ -21,8 +24,9 @@ const { cuboids } = Astro.props;
         position: relative;
         width: calc(cos(45deg) * 2em);
         height: calc(cos(30deg) * 1em);
-        margin: calc(cos(45deg) / 2 * 1em) 0;
 
-        font-size: 1.25em;
+        // i do not know where these numbers come from
+        margin-top: 0.34em;
+        margin-bottom: 0.37em;
     }
 </style>

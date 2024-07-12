@@ -1,0 +1,20 @@
+---
+interface Props {
+    img: ImageMetadata;
+    x?: number;
+    y?: number;
+}
+
+const { img, x = 0, y = 0 } = Astro.props;
+
+const style = `top: ${y + 7}em; left: ${x + 7}em`;
+---
+
+<img src={img.src} {style} />
+
+<style lang="scss">
+    img {
+        position: absolute;
+        height: 18em;
+    }
+</style>
