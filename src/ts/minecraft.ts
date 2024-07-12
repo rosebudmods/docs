@@ -1,6 +1,13 @@
 import { existsSync, readFileSync } from 'node:fs';
 import decompress from 'decompress';
-import type { Element, Faces, Model, Textures } from './minecraftTypes';
+import type {
+    Element,
+    Faces,
+    Model,
+    Recipe,
+    Tag,
+    Textures,
+} from './minecraftTypes';
 
 const path = 'src/assets/mc-assets';
 
@@ -31,6 +38,10 @@ function parseIdentifier(id: string): [string | null, string] {
     return [null, id];
 }
 
+function dropNamespace(id: string): string {
+    return id.includes(':') ? id.split(':', 2)[1]! : id;
+}
+
 function readModel(type: 'item' | 'block', id: string): Model {
     return JSON.parse(
         readFileSync(
@@ -40,12 +51,13 @@ function readModel(type: 'item' | 'block', id: string): Model {
     );
 }
 
+function readJsonPath(jsonPath: string) {
+    return JSON.parse(readFileSync(`${path}/${jsonPath}`, 'utf-8'));
+}
+
 function readModelFromIdentifier(id: string): Model {
-    return JSON.parse(
-        readFileSync(
-            `${path}/assets/minecraft/models/${parseIdentifier(id)[1]}.json`,
-            'utf-8',
-        ),
+    return readJsonPath(
+        `assets/minecraft/models/${parseIdentifier(id)[1]}.json`,
     );
 }
 
@@ -59,12 +71,15 @@ function resolveTexture(textures: Textures, id: keyof Textures) {
 }
 
 function getTexturePath(id: string) {
-    return `/${path}/assets/minecraft/textures/${parseIdentifier(id)[1]}.png`;
+    return `/${path}/assets/minecraft/textures/${dropNamespace(id)}.png`;
 }
 
 function pathFromFace(textures: Textures, id: string) {
     return getTexturePath(
-        resolveTexture(textures, id.substring(1) as keyof Textures)!,
+        resolveTexture(
+            textures,
+            (id.startsWith('#') ? id.substring(1) : id) as keyof Textures,
+        )!,
     );
 }
 
@@ -210,4 +225,50 @@ function applyCuboidTexture(
             },
         };
     }
+}
+
+type Repeat3<T> = [T, T, T];
+type Ingredients = Repeat3<Repeat3<string | undefined>>;
+
+function getSomethingFromTag(tag: string) {
+    const tagData: Tag = readJsonPath(
+        `data/minecraft/tags/item/${dropNamespace(tag)}.json`,
+    );
+    return tagData.values[0]!;
+}
+
+export function recipe(
+    id: string,
+): { result: string; ingredients: Ingredients } | null {
+    const recipe: Recipe = readJsonPath(`data/minecraft/recipe/${id}.json`);
+    if (recipe.type === 'minecraft:crafting_shaped') {
+        const ingredients = recipe.pattern.map((line) =>
+            [...line].map((key) => {
+                const item = recipe.key[key];
+                if (!item) return undefined;
+                return dropNamespace(
+                    'item' in item
+                        ? item.item
+                        : 'length' in item
+                          ? item[0]!.item
+                          : getSomethingFromTag(item.tag),
+                );
+            }),
+        );
+
+        if (ingredients.length === 1) ingredients.unshift([]);
+        if (ingredients.length === 2) ingredients.push([]);
+        for (const line of ingredients) {
+            if (line.length === 0) line.push(undefined);
+            if (line.length === 1) line.unshift(undefined);
+            if (line.length === 2) line.push(undefined);
+        }
+
+        return {
+            result: dropNamespace(recipe.result.id),
+            ingredients: ingredients as Ingredients,
+        };
+    }
+
+    return null;
 }

@@ -34,3 +34,24 @@ export type Model = {
 export type Textures = NonNullable<Model['textures']>;
 export type Element = NonNullable<Model['elements']>[number];
 export type Face = NonNullable<Element['faces'][Faces]>;
+
+export type Recipe =
+    | {
+          type: 'minecraft:crafting_shaped';
+          key: Record<
+              string,
+              { item: string } | { tag: string } | { item: string }[]
+          >;
+          pattern: string[];
+          result: {
+              count: number;
+              id: string;
+          };
+      }
+    | {
+          type: '';
+      };
+
+export type Tag = {
+    values: string[];
+};
