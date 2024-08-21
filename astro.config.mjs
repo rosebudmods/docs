@@ -34,6 +34,10 @@ export default defineConfig({
                     label: 'skin overrides',
                     autogenerate: { directory: 'skin-overrides' },
                 },
+                {
+                    label: 'styled renaming',
+                    autogenerate: { directory: 'styled-renaming' },
+                },
             ],
         }),
     ],

@@ -107,4 +107,5 @@ export const modsList = [
     mods.berries!,
     mods.ramel!,
     mods.skinOverrides!,
+    mods.styledRenaming!,
 ];

@@ -1,6 +1,8 @@
 import type { Project } from './modrinth';
 
 export function formatNumber(i: number): string {
+    if (i === 0) return '0';
+
     let out = '';
     while (i > 0) {
         out = ('' + (i % 1000)).padStart(3, '0') + ',' + out;
