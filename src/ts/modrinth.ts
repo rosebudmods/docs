@@ -108,4 +108,5 @@ export const modsList = [
     mods.ramel!,
     mods.skinOverrides!,
     mods.styledRenaming!,
+    mods.shutUpRealms!,
 ];

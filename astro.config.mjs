@@ -38,6 +38,10 @@ export default defineConfig({
                     label: 'styled renaming',
                     autogenerate: { directory: 'styled-renaming' },
                 },
+                {
+                    label: 'shut up realms',
+                    autogenerate: { directory: 'shut-up-realms' },
+                },
             ],
         }),
     ],
