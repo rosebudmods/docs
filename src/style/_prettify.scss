@@ -1,0 +1,119 @@
+@media (min-width: 50rem) {
+    :root {
+        // wider sidebar
+        --sl-sidebar-width: 27.5rem;
+        --sl-sidebar-pad-x: 2rem;
+
+        // wider content (compensated with padding below)
+        --sl-content-width: 50rem;
+    }
+
+    // make the content actually the size specified
+    .main-pane {
+        max-width: var(--sl-content-width);
+        width: calc(100vw - var(--sl-sidebar-width)) !important;
+        margin-inline: auto;
+    }
+
+    .sidebar-pane {
+        // replace border with background colour
+        background-color: var(--sl-color-bg-nav);
+        border: none;
+
+        // use background colour on header bar
+        top: 0;
+        padding-top: var(--sl-nav-height);
+
+        .sidebar-content {
+            // negative space behind sidebar
+            padding-inline-start: 10rem;
+        }
+    }
+
+    // make the right sidebar a fixed width
+    .right-sidebar-container {
+        width: 25rem;
+    }
+
+    .right-sidebar {
+        // remove huge border
+        border: none;
+
+        .right-sidebar-panel {
+            // more vertical padding!
+            padding: 4rem 0;
+
+            // add a smaller border
+            > * {
+                padding-inline: 1rem;
+                border-inline-start: 1px solid var(--sl-color-gray-6);
+            }
+        }
+
+        a {
+            // bigger link text
+            font-size: var(--sl-text-sm);
+
+            // no excess padding
+            margin-left: calc(-1 * var(--pad-inline));
+
+            // more line height!
+            line-height: 1.6;
+        }
+    }
+
+    header.header {
+        // remove background colour
+        background: initial;
+
+        // todo
+        // border: none;
+        border-bottom: 1px solid;
+        border-image: linear-gradient(
+                to right,
+                transparent var(--sl-sidebar-width),
+                var(--sl-color-hairline-shade) var(--sl-sidebar-width)
+            )
+            1;
+
+        .title-wrapper {
+            // negative space behind sidebar
+            padding-inline-start: calc(10rem - var(--sl-nav-pad-x));
+
+            .site-title {
+                gap: 0.5em;
+
+                img {
+                    height: 1.5em;
+                }
+            }
+        }
+    }
+
+    #starlight__on-this-page {
+        font-size: var(--sl-text-sm);
+
+        // undo my other title changes...
+        font-family: var(--sl-font);
+        letter-spacing: initial;
+    }
+}
+
+.sidebar-pane {
+    // bigger gap between page list sections
+    ul.top-level > li:not(:first-of-type) {
+        margin-top: 1rem;
+    }
+
+    // make headers the same size as other text
+    .group-label {
+        font-size: var(--sl-text-sm);
+    }
+
+    // no indents/border
+    li {
+        margin-inline-start: 0;
+        padding-inline-start: 0;
+        border: none;
+    }
+}

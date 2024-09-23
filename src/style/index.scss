@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@300..700&family=Manrope:wght@200..800&display=swap');
+@use './prettify';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Fira+Code:wght@300..700&family=Manrope:wght@200..800&display=swap');
 
 :root {
-    --sl-font: 'Atkinson Hyperlegible';
+    --sl-font: 'Inter';
     --sl-font-mono: 'Fira Code';
 
     // improves colour contrast on dark mode
@@ -12,6 +14,7 @@
 :is(h1, h2, h3, h4, h5, h6),
 .site-title > span {
     font-family: 'Manrope';
+    letter-spacing: -0.02em;
 }
 
 // make tables scrollable!
@@ -21,7 +24,7 @@ table {
 }
 
 // colours generated from here: https://starlight.astro.build/guides/css-and-tailwind/#color-theme-editor
-// current settings: hue 337, accent chroma 0.15, grey chroma 0.05
+// current settings: contrast AAA, hue 337, accent chroma 0.15, grey chroma 0.05
 
 /* Dark mode colors. */
 :root {
@@ -29,27 +32,27 @@ table {
     --sl-color-accent: #9d4189;
     --sl-color-accent-high: #dfbdd5;
     --sl-color-white: #ffffff;
-    --sl-color-gray-1: #f7e9f3;
-    --sl-color-gray-2: #cdbcc8;
-    --sl-color-gray-3: #a08097;
-    --sl-color-gray-4: #6b4d62;
-    --sl-color-gray-5: #492e42;
-    --sl-color-gray-6: #361d30;
-    --sl-color-black: #20141c;
+    --sl-color-gray-1: #f3ebf1;
+    --sl-color-gray-2: #cfc5cc;
+    --sl-color-gray-3: #b19dab;
+    --sl-color-gray-4: #63525e;
+    --sl-color-gray-5: #43323e;
+    --sl-color-gray-6: #30212c;
+    --sl-color-black: #1d161b;
 }
 
 /* Light mode colors. */
 :root[data-theme='light'] {
     --sl-color-accent-low: #e8cee0;
-    --sl-color-accent: #9f438b;
+    --sl-color-accent: #842971;
     --sl-color-accent-high: #4a2240;
-    --sl-color-white: #20141c;
-    --sl-color-gray-1: #361d30;
-    --sl-color-gray-2: #492e42;
-    --sl-color-gray-3: #6b4d62;
-    --sl-color-gray-4: #a08097;
-    --sl-color-gray-5: #cdbcc8;
-    --sl-color-gray-6: #f7e9f3;
-    --sl-color-gray-7: #fbf4f9;
+    --sl-color-white: #1d161b;
+    --sl-color-gray-1: #30212c;
+    --sl-color-gray-2: #43323e;
+    --sl-color-gray-3: #63525e;
+    --sl-color-gray-4: #988592;
+    --sl-color-gray-5: #c9bec5;
+    --sl-color-gray-6: #f3ebf1;
+    --sl-color-gray-7: #f9f5f8;
     --sl-color-black: #ffffff;
 }
