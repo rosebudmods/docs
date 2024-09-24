@@ -3,25 +3,26 @@ title: Configuration File
 description: how bodacious berries' configuration file works!
 sidebar:
   order: 4
+next: check out ramel!
 ---
 
-#### Introduction
+## Introduction
 
 The bodacious berries configuration file can be used to modify the rarities of each tier of berry bush. When modifying rarities, higher is more rare and lower is more common.
 The configuration file is located in `[installation directory, most often .minecraft]/config/bodacious_berries.toml`.
 
-#### Fields
+## Fields
 
 - `common_rarity`: the rarity of common berry bushes such as strawberries and saskatoons
 - `medium_rarity`: the rarity of somewhat rare berry bushes such as raspberries and lingonberries
 - `rare_rarity`: the rarity of rare berry bushes such as chorus berries and goji berries
 - `ultra_rare_rarity`: the rarity of ultra rare berry bushes such as the rainberry bush
 
-#### Notes
+## Notes
 
 - Currently, all changed values will only apply after the game is restarted.
 
-#### Example Configuration
+## Example Configuration
 
 ```toml
 # bodacious berries configuration file - higher is more rare, lower is more common

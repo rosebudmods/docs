@@ -5,13 +5,13 @@ sidebar:
   order: 1
 ---
 
-#### Introduction
+## Introduction
 
 The juicer supports custom recipes, created via datapacks. This is useful for situations such as adding support for making juice from another mod using the juicer from bodacious berries in a custom modpack. While bodacious berries supports a few mods out of the box, it can never be compatible with absolutely everything.
 
 The juicer's recipe type is `bodacious_berries:juicing`.
 
-#### Parameters in a juicing recipe
+## Parameters in a juicing recipe
 
 - `"ingredients"`: a list of ingredients in the recipe, as well as the receptacle
   - `"0"`: the first ingredient in the recipe
@@ -25,7 +25,7 @@ The juicer's recipe type is `bodacious_berries:juicing`.
   - `"all"`: an optional property. if this is specified, it will override ingredients 0, 1, and 2, becoming the only ingredient used in the recipe. this is useful if you are making juice from purely one type of fruit
 - `"result"`: the id of the result
 
-#### Examples
+## Examples
 
 An example recipe for grape juice:
 

@@ -3,9 +3,10 @@ title: reference
 description: a reference on all rainglow's colours, modes and entities!
 sidebar:
   order: 4
+next: check out bodacious berries!
 ---
 
-### available colours
+## available colours
 
 rainglow's available colours are:
 
@@ -27,7 +28,7 @@ rainglow's available colours are:
 - `white`
 - `yellow`
 
-### default modes
+## default modes
 
 |       mode id       | colours                                                                 |
 | :-----------------: | ----------------------------------------------------------------------- |
@@ -45,7 +46,7 @@ rainglow's available colours are:
 |     `pan_pride`     | `pink`, `yellow`, `blue`                                                |
 |    `trans_pride`    | `blue`, `white`, `pink`                                                 |
 
-### available entities
+## available entities
 
 - `glow_squid`
 - `allay`
