@@ -1,3 +1,38 @@
+@use './components/aside';
+@use './components/card';
+@use './components/code';
+@use './components/file-tree';
+@use './components/pagination';
+
+:root {
+    // smaller titles
+    --sl-text-h1: var(--sl-text-4xl);
+    --sl-text-h2: var(--sl-text-3xl);
+    --sl-text-h3: var(--sl-text-2xl);
+    --sl-text-h4: var(--sl-text-xl);
+
+    // nicer shadows
+    --sl-shadow-sm: 0 0.5px 1px rgb(0 0 0 / 0.1), 0 1px 5px rgb(0 0 0 / 0.05);
+
+    // nicer badge colours
+    --sl-badge-default-bg: var(--sl-color-accent-low) !important;
+    --sl-badge-default-text: var(--sl-color-accent-high);
+    --sl-badge-default-border: transparent;
+    &[data-theme='dark'] {
+        --sl-badge-default-bg: var(--sl-color-gray-5) !important;
+    }
+}
+
+// nicer colours
+:root {
+    --sl-color-purple-high: hsl(var(--sl-hue-purple), 80%, 90%);
+    --sl-color-purple-low: hsl(var(--sl-hue-purple), 25%, 20%);
+}
+:root[data-theme='light'] {
+    --sl-color-purple-high: hsl(var(--sl-hue-purple), 70%, 30%);
+    --sl-color-purple-low: hsl(var(--sl-hue-purple), 85%, 95%);
+}
+
 @media (min-width: 50rem) {
     :root {
         // wider sidebar
@@ -10,6 +45,7 @@
 
     // make the content actually the size specified
     .main-pane {
+        // TODO: right sidebar will overflow instead of main pane shrinking
         max-width: var(--sl-content-width);
         width: calc(100vw - var(--sl-sidebar-width)) !important;
         margin-inline: auto;
@@ -63,12 +99,18 @@
     }
 
     header.header {
-        // remove background colour
-        background: initial;
+        // use body background colour
+        background: linear-gradient(
+            to right,
+            transparent var(--sl-sidebar-width),
+            var(--sl-color-bg) var(--sl-sidebar-width)
+        );
+        // color-mix(in srgb, var(--sl-color-bg) 80%, transparent) var(--sl-sidebar-width)
+        // backdrop-filter: blur(20px);
 
-        // todo
-        // border: none;
-        border-bottom: 1px solid;
+        // TODO: more padding on right
+
+        // don't include border over sidebar
         border-image: linear-gradient(
                 to right,
                 transparent var(--sl-sidebar-width),
@@ -106,14 +148,65 @@
     }
 
     // make headers the same size as other text
-    .group-label {
+    .group-label > span,
+    a.large {
         font-size: var(--sl-text-sm);
     }
 
-    // no indents/border
     li {
+        // no indents/border
         margin-inline-start: 0;
         padding-inline-start: 0;
         border: none;
+
+        a {
+            // more greyed out colour
+            color: var(--sl-color-gray-3);
+            font-weight: inherit;
+
+            // more subtle selection indicator
+            &[aria-current='page'] {
+                font-weight: inherit;
+                color: var(--sl-color-text-accent);
+                background-color: inherit;
+
+                // don't change how badges look when page is selected
+                .sl-badge {
+                    --sl-color-bg-badge: var(--sl-badge-default-bg);
+                    --sl-color-border-badge: var(--sl-badge-default-border);
+                    color: var(--sl-badge-default-text);
+                }
+            }
+
+            // nicer badges
+            .sl-badge {
+                font-family: var(--sl-font);
+            }
+        }
     }
+}
+
+// text selection colour
+:root[data-theme='light'] ::selection {
+    background-color: var(--sl-color-accent-low);
+    color: var(--sl-color-accent-high);
+}
+:root ::selection {
+    background-color: var(--sl-color-accent-high);
+    color: var(--sl-color-accent-low);
+}
+
+// tighter titles
+h1 {
+    letter-spacing: -0.02em;
+}
+
+// title margins
+.sl-markdown-content
+    :not(h1, h2, h3, h4, h5, h6)
+    + :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+    margin-top: 1.75em;
+}
+.sl-markdown-content :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+    margin-bottom: 1.5rem;
 }

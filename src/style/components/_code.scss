@@ -1,0 +1,97 @@
+@function opacity($color, $opacity) {
+    @return color-mix(in srgb, $color $opacity, transparent);
+}
+
+// border radius, please!
+code {
+    border-radius: 0.25em;
+}
+
+:root {
+    --ec-frm-edBg: var(--sl-color-gray-5) !important;
+    --ec-frm-edActTabBg: var(--sl-color-gray-5) !important;
+}
+
+// code blocks
+.expressive-code {
+    // more padding around the code
+    --ec-codePadBlk: 1rem;
+    --ec-codePadInl: 1.75rem;
+
+    // more padding around the "tab"
+    --ec-frm-edTabsMargBlkStart: 0.25rem;
+    --ec-frm-edTabsMargInlStart: 0.25rem;
+
+    // mark colours
+    --ec-tm-markBg: #{opacity(var(--sl-color-accent-low), 30%)} !important;
+    --ec-tm-markBrdCol: var(--sl-color-accent) !important;
+    .ec-line.ins {
+        --tmLineBgCol: #{opacity(var(--ec-tm-insBg), 30%)} !important;
+    }
+    .ec-line.del {
+        --tmLineBgCol: #{opacity(var(--ec-tm-delBg), 30%)} !important;
+    }
+
+    figure {
+        figcaption.header {
+            // nicer background for the "tab list"
+            background: var(--sl-color-gray-6) !important;
+            border-radius: 0.75rem 0.75rem 0 0 !important;
+
+            // no borders
+            border: none !important;
+
+            .title {
+                // rounder tab
+                --tab-border-radius: calc(0.75rem - 0.25rem);
+
+                // no border
+                border: none !important;
+                &::after {
+                    display: none;
+                }
+            }
+        }
+        // line under tab
+        &.has-title:not(.is-terminal) .title {
+            border-bottom: 2px solid var(--sl-color-accent-low) !important;
+        }
+        // remove borders
+        &.has-title:not(.is-terminal) figcaption.header::before {
+            display: none;
+        }
+        &.is-terminal figcaption.header::after {
+            display: none;
+        }
+
+        pre {
+            border: none;
+            border-radius: 0.75rem !important;
+        }
+        &:is(.has-title, .is-terminal) pre {
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+        }
+
+        // fix copy button position
+        &.has-title .copy {
+            --button-spacing: calc(
+                var(--ec-frm-edTabsMargBlkStart) +
+                    (var(--ec-uiPadBlk) + var(--ec-frm-edActTabIndHt)) * 2 +
+                    1rem + 1rem
+            );
+        }
+
+        // nice circular button
+        .copy button {
+            border-radius: 50%;
+
+            box-sizing: content-box;
+            padding: 0.1rem;
+
+            &::after {
+                inset: 0.1rem;
+            }
+        }
+    }
+}

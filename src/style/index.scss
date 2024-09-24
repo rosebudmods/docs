@@ -14,7 +14,6 @@
 :is(h1, h2, h3, h4, h5, h6),
 .site-title > span {
     font-family: 'Manrope';
-    letter-spacing: -0.02em;
 }
 
 // make tables scrollable!
@@ -24,7 +23,7 @@ table {
 }
 
 // colours generated from here: https://starlight.astro.build/guides/css-and-tailwind/#color-theme-editor
-// current settings: contrast AAA, hue 337, accent chroma 0.15, grey chroma 0.05
+// current settings: contrast AAA, hue 337, accent chroma 0.15, grey chroma 0.03
 
 /* Dark mode colors. */
 :root {

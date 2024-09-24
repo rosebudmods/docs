@@ -1,0 +1,27 @@
+.pagination-links {
+    grid-template-columns: repeat(2, minmax(min(18rem, 100%), 1fr));
+
+    a {
+        box-shadow: none;
+
+        border-color: var(--sl-color-gray-5);
+        transition: border-color 0.25s;
+
+        & > span {
+            font-size: var(--sl-text-sm);
+        }
+
+        &[rel='next'] {
+            grid-column: 2;
+        }
+
+        &:hover {
+            border-color: var(--sl-color-accent);
+        }
+    }
+}
+
+.link-title {
+    font-size: var(--sl-text-base);
+    color: var(--sl-color-text-accent);
+}

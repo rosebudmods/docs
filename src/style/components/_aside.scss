@@ -1,0 +1,16 @@
+// asides that match cards better
+.starlight-aside {
+    padding: 1.25rem;
+
+    border-radius: 0.75rem;
+    border-inline-start: none;
+
+    // better code colour merging
+    code:not(:where(.not-content *)) {
+        background-color: color-mix(
+            in srgb,
+            var(--sl-color-black) 70%,
+            transparent
+        ) !important;
+    }
+}
