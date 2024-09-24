@@ -12,7 +12,8 @@
     --sl-text-h4: var(--sl-text-xl);
 
     // nicer shadows
-    --sl-shadow-sm: 0 0.5px 1px rgb(0 0 0 / 0.1), 0 1px 5px rgb(0 0 0 / 0.05);
+    --sl-shadow-sm: 0 0.5px 1px rgb(0 0 0 / 0.1), 0 1px 5px rgb(0 0 0 / 0.05) !important;
+    --sl-shadow-lg: 0 3px 5px hsl(0 0 0 / 0.2), 0 5px 15px hsl(0 0 0 / 0.05) !important;
 
     // nicer badge colours
     --sl-badge-default-bg: var(--sl-color-accent-low) !important;
@@ -227,4 +228,12 @@ h1 {
 }
 .sl-markdown-content :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
     margin-bottom: 1.5rem;
+}
+
+// jump to content button
+body > a[href='#_top'] {
+    border-radius: 0.5rem;
+
+    background-color: var(--sl-color-accent-low);
+    color: var(--sl-color-accent-high);
 }
