@@ -111,7 +111,7 @@
         }
     }
 
-    header.header {
+    body > .page:has(> nav) header {
         // use body background colour
         background: linear-gradient(
             to right,
@@ -130,6 +130,11 @@
                 var(--sl-color-hairline-shade) var(--sl-sidebar-width)
             )
             1;
+    }
+
+    header.header {
+        // use body background colour
+        background: var(--sl-color-bg);
 
         .title-wrapper {
             // negative space behind sidebar
