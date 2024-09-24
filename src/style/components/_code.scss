@@ -16,11 +16,14 @@ code {
 .expressive-code {
     // more padding around the code
     --ec-codePadBlk: 1rem;
-    --ec-codePadInl: 1.75rem;
+    --ec-codePadInl: 1.5rem;
 
     // more padding around the "tab"
     --ec-frm-edTabsMargBlkStart: 0.25rem;
     --ec-frm-edTabsMargInlStart: 0.25rem;
+
+    // we love border radius here
+    --ec-brdRad: 0.5rem;
 
     // mark colours
     --ec-tm-markBg: #{opacity(var(--sl-color-accent-low), 30%)} !important;
@@ -33,15 +36,20 @@ code {
     }
 
     figure {
+        background: var(--code-background) !important;
+
         figcaption.header {
-            // nicer background for the "tab list"
-            background: var(--sl-color-gray-6) !important;
-            border-radius: 0.75rem 0.75rem 0 0 !important;
+            // no background
+            background: unset !important;
 
             // no borders
             border: none !important;
+            border-bottom: 1px solid var(--sl-color-gray-5) !important;
 
             .title {
+                position: relative;
+                overflow: visible !important;
+
                 // rounder tab
                 --tab-border-radius: calc(0.75rem - 0.25rem);
 
@@ -53,8 +61,20 @@ code {
             }
         }
         // line under tab
-        &.has-title:not(.is-terminal) .title {
-            border-bottom: 2px solid var(--sl-color-accent-low) !important;
+        &.has-title:not(.is-terminal) .title::after {
+            content: '';
+            display: unset;
+            position: absolute;
+            inset: unset !important;
+            inset-inline: 0.75em !important;
+            bottom: -1px !important;
+            overflow: visible;
+
+            height: 2px;
+            background-color: var(--sl-color-accent);
+
+            border: none;
+            border-radius: 2px;
         }
         // remove borders
         &.has-title:not(.is-terminal) figcaption.header::before {
@@ -65,12 +85,8 @@ code {
         }
 
         pre {
+            background: unset !important;
             border: none;
-            border-radius: 0.75rem !important;
-        }
-        &:is(.has-title, .is-terminal) pre {
-            border-top-left-radius: 0 !important;
-            border-top-right-radius: 0 !important;
         }
 
         // fix copy button position

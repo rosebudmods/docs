@@ -44,11 +44,20 @@
     }
 
     // make the content actually the size specified
-    .main-pane {
-        // TODO: right sidebar will overflow instead of main pane shrinking
+    body > .page:has(> nav) .main-pane {
         max-width: var(--sl-content-width);
         width: calc(100vw - var(--sl-sidebar-width)) !important;
         margin-inline: auto;
+
+        // 15rem right sidebar
+        @media (min-width: 72rem) {
+            width: calc(100vw - var(--sl-sidebar-width) - 15rem) !important;
+        }
+
+        // 25rem right sidebar
+        @media (min-width: 90rem) {
+            width: calc(100vw - var(--sl-sidebar-width) - 25rem) !important;
+        }
     }
 
     .sidebar-pane {
@@ -68,7 +77,11 @@
 
     // make the right sidebar a fixed width
     .right-sidebar-container {
-        width: 25rem;
+        width: 15rem;
+
+        @media (min-width: 90rem) {
+            width: 25rem;
+        }
     }
 
     .right-sidebar {

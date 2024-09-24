@@ -23,7 +23,7 @@ table {
 }
 
 // colours generated from here: https://starlight.astro.build/guides/css-and-tailwind/#color-theme-editor
-// current settings: contrast AAA, hue 337, accent chroma 0.15, grey chroma 0.03
+// current settings: contrast AAA, hue 337, accent chroma 0.15, grey chroma 0.025
 
 /* Dark mode colors. */
 :root {
@@ -31,13 +31,13 @@ table {
     --sl-color-accent: #9d4189;
     --sl-color-accent-high: #dfbdd5;
     --sl-color-white: #ffffff;
-    --sl-color-gray-1: #f3ebf1;
-    --sl-color-gray-2: #cfc5cc;
-    --sl-color-gray-3: #b19dab;
-    --sl-color-gray-4: #63525e;
-    --sl-color-gray-5: #43323e;
-    --sl-color-gray-6: #30212c;
-    --sl-color-black: #1d161b;
+    --sl-color-gray-1: #f2ebf0;
+    --sl-color-gray-2: #cec5cb;
+    --sl-color-gray-3: #af9eaa;
+    --sl-color-gray-4: #62535d;
+    --sl-color-gray-5: #41333d;
+    --sl-color-gray-6: #2f222b;
+    --sl-color-black: #1c161a;
 }
 
 /* Light mode colors. */
@@ -45,13 +45,13 @@ table {
     --sl-color-accent-low: #e8cee0;
     --sl-color-accent: #842971;
     --sl-color-accent-high: #4a2240;
-    --sl-color-white: #1d161b;
-    --sl-color-gray-1: #30212c;
-    --sl-color-gray-2: #43323e;
-    --sl-color-gray-3: #63525e;
-    --sl-color-gray-4: #988592;
-    --sl-color-gray-5: #c9bec5;
-    --sl-color-gray-6: #f3ebf1;
-    --sl-color-gray-7: #f9f5f8;
+    --sl-color-white: #1c161a;
+    --sl-color-gray-1: #2f222b;
+    --sl-color-gray-2: #41333d;
+    --sl-color-gray-3: #62535d;
+    --sl-color-gray-4: #968691;
+    --sl-color-gray-5: #c8bfc5;
+    --sl-color-gray-6: #f2ebf0;
+    --sl-color-gray-7: #f9f5f7;
     --sl-color-black: #ffffff;
 }
