@@ -8,7 +8,7 @@ next: check out bodacious berries!
 
 ## available colours
 
-rainglow's available colours are:
+rainglow's available colours are Minecraft's default 16, and `indigo`:
 
 - `black`
 - `blue`
@@ -30,24 +30,26 @@ rainglow's available colours are:
 
 ## default modes
 
-|       mode id       | colours                                                                 |
-| :-----------------: | ----------------------------------------------------------------------- |
-|    `all_colours`    | everything listed in the "available colours" section                    |
-|      `custom`       | whatever you've defined in your [configuration file](/rainglow/config/) |
-|      `rainbow`      | `red`, `orange`, `yellow`, `green`, `lime`, `blue`, `indigo`, `purple`  |
-|     `aro_pride`     | `black`, `gray`, `white`, `green`                                       |
-|     `ace_pride`     | `black`, `gray`, `white`, `purple`                                      |
-|     `bi_pride`      | `blue`, `pink`, `purple`                                                |
-|     `gay_pride`     | `blue`, `cyan`, `green`, `white`                                        |
-| `genderfluid_pride` | `purple`, `white`, `black`, `pink`, `blue`                              |
-|   `lesbian_pride`   | `red`, `orange`, `white`, `pink`, `purple`                              |
-|    `monochrome`     | `black`, `gray`, `white`                                                |
-|    `enby_pride`     | `yellow`, `white`, `black`, `purple`                                    |
-|     `pan_pride`     | `pink`, `yellow`, `blue`                                                |
-|    `trans_pride`    | `blue`, `white`, `pink`                                                 |
+|       mode id       | colours                                                                 | ui color |
+| :-----------------: | ----------------------------------------------------------------------- | -------- |
+|    `all_colours`    | everything listed in the "available colours" section                    | #00ff00  |
+|      `custom`       | whatever you've defined in your [configuration file](/rainglow/config/) | #00ffe1  |
+|      `rainbow`      | `red`, `orange`, `yellow`, `green`, `lime`, `blue`, `indigo`, `purple`  | #aa208f  |
+|     `ace_pride`     | `black`, `gray`, `white`, `purple`                                      | #a252Bf  |
+|     `aro_pride`     | `black`, `gray`, `white`, `green`                                       | #61d85b  |
+|     `bi_pride`      | `blue`, `pink`, `purple`                                                | #0063a0  |
+|     `gay_pride`     | `blue`, `cyan`, `green`, `white`                                        | #61d85b  |
+| `genderfluid_pride` | `purple`, `white`, `black`, `pink`, `blue`                              | #a02cb7  |
+|   `lesbian_pride`   | `red`, `orange`, `white`, `pink`, `purple`                              | #db4b32  |
+|    `monochrome`     | `black`, `gray`, `white`                                                | #b7b7b7  |
+|    `enby_pride`     | `yellow`, `white`, `black`, `purple`                                    | #705ca8  |
+|     `pan_pride`     | `pink`, `yellow`, `blue`                                                | #cea800  |
+|    `trans_pride`    | `blue`, `white`, `pink`                                                 | #d472e5  |
 
 ## available entities
 
-- `glow_squid`
-- `allay`
-- `slime`
+|  entity id   | default colour |
+| :----------: | -------------- |
+| `glow_squid` | `blue`         |
+|   `allay`    | `blue`         |
+|   `slime`    | `lime`         |
