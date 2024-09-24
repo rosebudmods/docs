@@ -1,10 +1,8 @@
 @use './prettify';
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Fira+Code:wght@300..700&family=Manrope:wght@200..800&display=swap');
-
 :root {
-    --sl-font: 'Inter';
-    --sl-font-mono: 'Fira Code';
+    --sl-font: 'Inter Variable', sans-serif;
+    --sl-font-mono: 'Fira Code', monospace;
 
     // improves colour contrast on dark mode
     --sl-color-text: var(--sl-color-gray-1);
@@ -13,7 +11,7 @@
 // title font
 :is(h1, h2, h3, h4, h5, h6),
 .site-title > span {
-    font-family: 'Manrope';
+    font-family: 'Manrope Variable', sans-serif;
 }
 
 // make tables scrollable!

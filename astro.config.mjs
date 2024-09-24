@@ -1,5 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,7 +17,18 @@ export default defineConfig({
                 github: 'https://github.com/rosebudmods',
                 discord: 'https://discord.rosebud.dev/',
             },
-            customCss: ['./src/style/index.scss'],
+            editLink:
+                process.env.NODE_ENV === 'development'
+                    ? {
+                          baseUrl: `vscode://file/${path.dirname(fileURLToPath(import.meta.url))}`,
+                      }
+                    : undefined,
+            customCss: [
+                './src/style/index.scss',
+                '@fontsource-variable/inter/opsz.css',
+                '@fontsource-variable/fira-code/wght.css',
+                '@fontsource-variable/manrope/wght.css',
+            ],
             sidebar: [
                 { label: 'overview', slug: 'overview' },
                 {
@@ -45,4 +58,13 @@ export default defineConfig({
             ],
         }),
     ],
+    vite: {
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern-compiler',
+                },
+            },
+        },
+    },
 });
