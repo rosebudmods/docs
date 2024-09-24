@@ -1,6 +1,4 @@
 .pagination-links {
-    grid-template-columns: repeat(2, minmax(min(18rem, 100%), 1fr));
-
     a {
         box-shadow: none;
 
@@ -9,10 +7,6 @@
 
         & > span {
             font-size: var(--sl-text-sm);
-        }
-
-        &[rel='next'] {
-            grid-column: 2;
         }
 
         &:hover {
