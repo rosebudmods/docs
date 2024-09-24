@@ -17,8 +17,8 @@
 
     // nicer badge colours
     --sl-badge-default-bg: var(--sl-color-accent-low) !important;
-    --sl-badge-default-text: var(--sl-color-accent-high);
-    --sl-badge-default-border: transparent;
+    --sl-badge-default-text: var(--sl-color-accent-high) !important;
+    --sl-badge-default-border: transparent !important;
     &[data-theme='dark'] {
         --sl-badge-default-bg: var(--sl-color-gray-5) !important;
     }
