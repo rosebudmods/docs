@@ -37,27 +37,25 @@
 @media (min-width: 50rem) {
     :root {
         // wider sidebar
-        --sl-sidebar-width: 27.5rem;
+        --sl-sidebar-width: clamp(
+            17.5rem,
+            calc(100vw - var(--sl-content-width) - 15rem),
+            27.5rem
+        );
         --sl-sidebar-pad-x: 2rem;
 
         // wider content (compensated with padding below)
-        --sl-content-width: 50rem;
+        --sl-content-width: 45rem;
     }
 
     // make the content actually the size specified
     body > .page:has(> nav) .main-pane {
-        max-width: var(--sl-content-width);
-        width: calc(100vw - var(--sl-sidebar-width)) !important;
-        margin-inline: auto;
+        width: calc(var(--sl-content-width) + 10rem) !important;
+        max-width: 100%;
 
-        // 15rem right sidebar
-        @media (min-width: 72rem) {
-            width: calc(100vw - var(--sl-sidebar-width) - 15rem) !important;
-        }
-
-        // 25rem right sidebar
-        @media (min-width: 90rem) {
-            width: calc(100vw - var(--sl-sidebar-width) - 25rem) !important;
+        > main {
+            max-width: var(--sl-content-width) !important;
+            margin-inline: auto;
         }
     }
 
@@ -72,17 +70,16 @@
 
         .sidebar-content {
             // negative space behind sidebar
-            padding-inline-start: 10rem;
+            padding-inline-start: max(
+                calc(var(--sl-sidebar-width) - 17.5rem),
+                var(--sl-sidebar-pad-x)
+            );
         }
     }
 
     // make the right sidebar a fixed width
     .right-sidebar-container {
         width: 15rem;
-
-        @media (min-width: 90rem) {
-            width: 25rem;
-        }
     }
 
     .right-sidebar {
@@ -139,7 +136,12 @@
 
         .title-wrapper {
             // negative space behind sidebar
-            padding-inline-start: calc(10rem - var(--sl-nav-pad-x));
+            padding-inline-start: calc(
+                max(
+                        calc(var(--sl-sidebar-width) - 17.5rem),
+                        var(--sl-sidebar-pad-x)
+                    ) - var(--sl-nav-pad-x)
+            );
 
             .site-title {
                 gap: 0.5em;
