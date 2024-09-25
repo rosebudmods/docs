@@ -41,4 +41,4 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           body-template: |
             ---
-            [preview this pull request!](${{ steps.cloudflare-publish.outputs.url }})
+            [preview this pull request!](${{ steps.cloudflare-publish.outputs.alias }})
