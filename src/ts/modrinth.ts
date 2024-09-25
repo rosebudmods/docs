@@ -99,14 +99,23 @@ export async function getOrgProjects(id: string): Promise<Project[]> {
 
 export const projects = await getOrgProjects('rosebud');
 
+export type RosebudModId =
+    | 'rainglow'
+    | 'berries'
+    | 'ramel'
+    | 'skinOverrides'
+    | 'styledRenaming'
+    | 'shutUpRealms';
+
 export const mods = Object.fromEntries(
     projects.map((proj) => [kebabToCamel(proj.slug), proj]),
-);
+) as Record<RosebudModId, Project>;
+
 export const modsList = [
-    mods.rainglow!,
-    mods.berries!,
-    mods.ramel!,
-    mods.skinOverrides!,
-    mods.styledRenaming!,
-    mods.shutUpRealms!,
+    mods.rainglow,
+    mods.berries,
+    mods.ramel,
+    mods.skinOverrides,
+    mods.styledRenaming,
+    mods.shutUpRealms,
 ];

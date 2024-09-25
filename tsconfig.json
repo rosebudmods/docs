@@ -6,5 +6,8 @@
             "@components/*": ["src/components/*"],
             "@ts/*": ["src/ts/*"]
         }
+    },
+    "mdx": {
+        "checkMdx": true
     }
 }
