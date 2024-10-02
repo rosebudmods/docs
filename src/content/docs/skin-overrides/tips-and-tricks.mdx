@@ -11,6 +11,8 @@ import {
   FileTree,
   LinkCard,
   Steps,
+  Tabs,
+  TabItem,
 } from '@astrojs/starlight/components';
 
 ## for skin artists
@@ -30,7 +32,32 @@ this mod was created in order to instantly preview skins from within the game. t
 
     </FileTree>
 
-3.  export your skin texture into this folder, naming it `[username].[slim or wide].png`. for example, if i (oriifu) was testing a slim skin, i would call it `oriifu.slim.png`, like this:
+3.  <Tabs syncKey="editor">
+      <TabItem label="blockbench">
+        right-click the texture you're using in the sidebar, and press "save
+        as". from there, navigate to your `skin_overrides` folder, naming it
+        `[username].[slim or wide]`. for example, if i (oriifu) was testing a
+        slim skin, i would call it `oriifu.slim`, which saves it like this:
+      </TabItem>
+      <TabItem label="aseprite">
+        go to file > save as, then navigate to your `skin_overrides` folder. if
+        you aren't able to do that, you can copy your ase/png file to the
+        `skin_overrides` folder instead, then open that in aseprite. you should
+        name your file `[username].[slim or wide].png`. for example, if i
+        (oriifu) was testing a slim skin, i would call it `oriifu.slim.png`,
+        which saves it like this:
+      </TabItem>
+      <TabItem label="gimp">
+        export (ctrl+shift+E) your texture into the `skin_overrides` folder,
+        naming it `[username].[slim or wide].png`. for example, if i (oriifu)
+        was testing a slim skin, i would call it `oriifu.slim.png`, like this:
+      </TabItem>
+      <TabItem label="other">
+        save your skin texture into the `skin_overrides` folder, naming it
+        `[username].[slim or wide].png`. for example, if i (oriifu) was testing
+        a slim skin, i would call it `oriifu.slim.png`, like this:
+      </TabItem>
+    </Tabs>
 
     <FileTree>
 
@@ -50,7 +77,21 @@ this mod was created in order to instantly preview skins from within the game. t
 
     </Aside>
 
-4.  to update your skin in game, simply re-export the texture.
+4.  <Tabs syncKey="editor">
+      <TabItem label="blockbench">
+        to update your skin in game, simply save.
+      </TabItem>
+      <TabItem label="aseprite">
+        to update your skin in game, simply save. (note that this will save as a
+        png, not ase.)
+      </TabItem>
+      <TabItem label="gimp">
+        to update your skin in game, simply re-export the texture (ctrl+E).
+      </TabItem>
+      <TabItem label="other">
+        to update your skin in game, simply save the texture.
+      </TabItem>
+    </Tabs>
 
     you don't need to run a command or do a resource reload--the skin will update automagically!
 
