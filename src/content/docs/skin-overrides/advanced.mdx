@@ -44,11 +44,9 @@ to identify a player, a file name must include a player id. a player id can be o
 
 ### `png` files
 
-a `png` override simply replaces the skin/cape texture with the file. files should be called `[id].png`.
+a `png` override simply replaces the skin/cape texture with the file. files should be called `[id].png`, or `[id].[model].png` to specify a model (`wide` or `slim`).
 
-for skins, files will be processed like other skins. this means, for instance, if you have a legacy &lt;1.8 skin, you can use it, and the game will upgrade it just like it would any other skin.
-
-with skins, you can also optionally provide a model. the model can either be `wide` or `slim`, and goes in the filename like `[id].[model].png`.
+for skins, files will be processed like other skins. this means, for instance, if you have a legacy pre-1.8 skin, you can use it, and the game will upgrade it just like it would any other skin.
 
 <FileTree>
 
@@ -63,7 +61,11 @@ with skins, you can also optionally provide a model. the model can either be `wi
 
 ### `txt` files
 
-`txt` files are always named `[id].png` and contain a namespaced id. right now the only functioning namespace is `skin_overrides`, which will use the skin/cape from the library with the given id. if the id doesn't exist, nothing will happen.
+`txt` files are always named `[id].png` and contain a namespaced id. different namespaces will have different functionalities. the supported namespaces are:
+
+- `skin_overrides` -- uses the skin/cape from the library with the given id. if the id doesn't exist, nothing will happen.
+
+for example, this file will use the library entry with the id `library_id_here`:
 
 ```
 // skin_overrides/oriifu.txt
@@ -82,7 +84,7 @@ the `library.json` file in either the skin or cape overrides folders contains a 
 | `texture` | `string` | the namespaced id of a texture.                           | yes, or `file`    |
 | `model`   | `string` | for skins. either `wide` or `slim`.                       | skins only        |
 
-here is an example library, and how it can be used:
+here is an example library file:
 
 <FileTree>
 
@@ -102,9 +104,17 @@ here is an example library, and how it can be used:
     "id": "my_awesome_skin",
     "file": "some_skin.png",
     "model": "slim"
+  },
+  {
+    "name": "Steve",
+    "id": "steve",
+    "texture": "minecraft:textures/entity/player/wide/steve.png",
+    "model": "wide"
   }
 ]
 ```
+
+to use the skins, reference them from an [override txt file](#txt-files) with the `skin_overrides` namespace:
 
 ```
 // oriifu.txt
