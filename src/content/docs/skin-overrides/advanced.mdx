@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { FileTree } from '@astrojs/starlight/components';
+import { Aside, FileTree } from '@astrojs/starlight/components';
 
 this page has information on how to manually modify skin or cape overrides, rather than using the ui.
 
@@ -64,6 +64,15 @@ for skins, files will be processed like other skins. this means, for instance, i
 `txt` files are always named `[id].png` and contain a namespaced id. different namespaces will have different functionalities. the supported namespaces are:
 
 - `skin_overrides` -- uses the skin/cape from the library with the given id. if the id doesn't exist, nothing will happen.
+- `minecraft` -- copies the skin/cape from the user with the given username/UUID. if the user doesn't exist, nothing will happen.
+
+<Aside type="caution">
+
+minecraft identifiers only support lowercase letters, so anything you specify will have to be in lowercase.
+
+for example, use `minecraft:mumbo`, not `minecraft:Mumbo`.
+
+</Aside>
 
 for example, this file will use the library entry with the id `library_id_here`:
 
@@ -76,13 +85,21 @@ skin_overrides:library_id_here
 
 the `library.json` file in either the skin or cape overrides folders contains a list of library objects:
 
-| key       | type     | description                                               | required          |
-| --------- | -------- | --------------------------------------------------------- | ----------------- |
-| `name`    | `string` | the name of the library entry. will be shown in the ui.   | yes               |
-| `id`      | `string` | the id of the library entry. should be any unique string. | yes               |
-| `file`    | `string` | the name of a file in the library folder.                 | yes, or `texture` |
-| `texture` | `string` | the namespaced id of a texture.                           | yes, or `file`    |
-| `model`   | `string` | for skins. either `wide` or `slim`.                       | skins only        |
+| key       | type        | description                                               | required            |
+| --------- | ----------- | --------------------------------------------------------- | ------------------- |
+| `name`    | `string`    | the name of the library entry. will be shown in the ui.   | yes                 |
+| `id`      | `string`    | the id of the library entry. should be any unique string. | yes                 |
+| `file`    | `string`    | the name of a file in the library folder.                 | yes, or `texture`   |
+| `texture` | `string`    | the namespaced id of a texture.                           | yes, or `file`      |
+| `model`   | `string`    | for skins. either `wide` or `slim`.                       | yes, for skins only |
+| `signed`  | `Signature` | the signature for a skin.                                 | no, for skins only  |
+
+the signature value is the same as in the `textures` property in a [minecraft profile](https://sessionserver.mojang.com/session/minecraft/profile/f369e23fed674f6a8e794a2ca148691a?unsigned=false). this is the definition:
+
+| key         | type     | description                        | required |
+| ----------- | -------- | ---------------------------------- | -------- |
+| `value`     | `string` | the signed value, base-64 encoded. | yes      |
+| `signature` | `string` | the signature, signed by mojang.   | yes      |
 
 here is an example library file:
 
@@ -109,7 +126,11 @@ here is an example library file:
     "name": "Steve",
     "id": "steve",
     "texture": "minecraft:textures/entity/player/wide/steve.png",
-    "model": "wide"
+    "model": "wide",
+    "signed": {
+      "value": "ewogICJ0aW...",
+      "signature": "fLsSWOHnNI..."
+    }
   }
 ]
 ```
