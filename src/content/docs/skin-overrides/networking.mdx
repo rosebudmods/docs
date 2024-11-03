@@ -1,0 +1,33 @@
+---
+title: networking
+description: how overrides work on servers.
+sidebar:
+  order: 3
+  badge: new!
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+since version 2.2.0, skin overrides has server side support, which adds new functionality! all the stuff on this page will only apply if the server has the mod installed.
+
+## synced overrides
+
+if you are using a library override, it can be shared with other players on the server. this intentionally only works with library overrides, not file overrides.
+
+**this is only visible to players on the server**, meaning if someone tried to view your skin (for example, on NameMC), they would see your global skin, not the override.
+
+<Aside type="note">
+
+due to technical limitations, if your override is being shared, **your cape will not show for vanilla clients**. however, other players with the mod will be able to see your cape as usual. you can also work around this by changing your skin globally.
+
+</Aside>
+
+## changing skin globally
+
+you can change your skin globally using the mod like you would through the launcher or minecraft.net. unlike overrides, **this is _not_ just on the server**; all players will be able to see what you've changed your skin to. if the mod is installed on the server, other players will see the change immediately, instead of you having to leave and rejoin.
+
+## which should i use?
+
+if you're on a role-playing server, there is not a huge difference between the two options. however, using an override may update faster than changing your skin globally, as for the latter the mod needs to upload the skin.
+
+if you're making something like the Life Series, changing your skin (e.g from green to yellow) can spoil viewers ahead of episodes actually releasing. it can also be disruptive to have to leave and rejoin to change your skin. using this mod, you can change your skin without leaving the game, and without your pesky viewers knowing (though it might be nice to set your skin later, so everyone can see it!).
