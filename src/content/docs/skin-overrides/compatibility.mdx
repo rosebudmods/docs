@@ -8,27 +8,51 @@ next: check out styled renaming!
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-skin overrides supports many versions of minecraft, going back to 1.14.4. versions before 1.19.4 do not have the ui, and the mod can only be used by [modifying the files yourself](/skin-overrides/advanced/). here is a complete list of versions the mod supports:
+skin overrides supports many versions of minecraft, going back to 1.14.4. versions before 1.19.4 do not have the ui, and the mod can only be used by [modifying the files yourself](/skin-overrides/advanced/). from 1.20.6 onwards, the mod has [networking abilities](/skin-overrides/usage/#server-support).
 
-| version | last version | has ui? | updated? | updates end |
-| ------: | :----------: | :-----: | :------: | :---------: |
-|  1.21.1 |    2.1.1     |   ✅    |    ✅    |     TBD     |
-|  1.20.6 |    2.1.1     |   ✅    |    ✅    |  apr 2026   |
-|  1.20.4 |    2.1.1     |   ✅    |    ✅    |  dec 2025   |
-|  1.20.2 |    2.1.1     |   ✅    |    ✅    |  sep 2025   |
-|  1.20.1 |    2.1.1     |   ✅    |    ✅    | _jun 2028_  |
-|  1.19.4 |    2.1.1     |   ✅    |    ✅    |  mar 2025   |
-|  1.19.3 |    2.1.1     |   ❌    |    ✅    |  dec 2024   |
-|  1.19.2 |    2.1.1     |   ❌    |    ✅    | _aug 2027_  |
-|    1.19 |    2.1.1     |   ❌    |    ❌    |  jun 2024   |
-|  1.18.2 |    2.1.1     |   ❌    |    ✅    | _feb 2027_  |
-|  1.18.1 |    2.1.1     |   ❌    |    ❌    |  dec 2023   |
-|  1.17.1 |    2.1.1     |   ❌    |    ✅    | _jul 2026_  |
-|  1.16.5 |    2.1.1     |   ❌    |    ✅    | _jan 2026_  |
-|  1.15.2 |    2.1.1     |   ❌    |    ✅    | _jan 2025_  |
-|  1.14.4 |    2.1.1     |   ❌    |    ❌    | _jul 2024_  |
+here are the update drops the mod supports:
 
-every version of minecraft (except for versions which had hotfixes released) will have versions supporting it for at least 2 years after its release. the most used version of a particular update (the LTS version) will be supported for 5 years.
+|               drop | version | from  | to  | ui? | server? |
+| -----------------: | :-----: | :---: | :-: | :-: | :-----: |
+| Bundles of Bravery | 1.21.3  | 2.2.0 | --  | ✅  |   ✅    |
+|      Tricky Trials | 1.21.1  | 1.0.0 | --  | ✅  |   ✅    |
+|       Armored Paws | 1.20.6  | 1.0.0 | --  | ✅  |   ✅    |
+|      Bats and Pots | 1.20.4  | 1.0.0 | --  | ✅  |   ❌    |
+
+\
+and here are the pre-1.20.4 updates the mod supports:
+
+| version | from  | support ends | ui? | server? |
+| ------: | :---: | :----------: | :-: | :-----: |
+|  1.20.2 | 1.0.0 |   sep 2025   | ✅  |   ❌    |
+|  1.20.1 | 2.1.0 |  _jun 2028_  | ✅  |   ❌    |
+|  1.19.4 | 2.1.0 |   mar 2025   | ✅  |   ❌    |
+|  1.19.3 | 2.1.0 |   dec 2024   | ❌  |   ❌    |
+|  1.19.2 | 2.1.0 |  _aug 2027_  | ❌  |   ❌    |
+|  1.18.2 | 2.1.0 |  _feb 2027_  | ❌  |   ❌    |
+|  1.17.1 | 2.1.1 |  _jul 2026_  | ❌  |   ❌    |
+|  1.16.5 | 2.1.1 |  _jan 2026_  | ❌  |   ❌    |
+|  1.15.2 | 2.1.1 |  _jan 2025_  | ❌  |   ❌    |
+
+<details>
+  <summary>no longer supported versions</summary>
+
+| version | from  |  to   | ui? | server? | updates ended |
+| ------: | :---: | :---: | :-: | :-----: | :-----------: |
+|    1.19 | 2.1.0 | 2.1.1 | ❌  |   ❌    |   jun 2024    |
+|  1.18.1 | 2.1.0 | 2.1.1 | ❌  |   ❌    |   dec 2023    |
+|  1.14.4 | 2.1.1 | 2.1.1 | ❌  |   ❌    |  _jul 2024_   |
+
+</details>
+
+<details>
+  <summary>which versions are supported?</summary>
+
+**update drops:** the latest version of the 20 latest drops will be supported.
+
+**pre-1.20.4:** all releases, except for those with hotfixes (a patch release with the same protocol number), will have versions supporting it for at least 2 years after its release. the most used version of a particular update (by modrinth mods supporting it) will be supported for 5 years. versions before 1.14 cannot be supported.
+
+</details>
 
 ## compatibility with other mods
 
