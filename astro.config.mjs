@@ -16,6 +16,9 @@ export default defineConfig({
             social: {
                 github: 'https://github.com/rosebudmods',
                 discord: 'https://discord.rosebud.dev/',
+                blueSky: 'https://bsky.app/profile/rosebud.dev',
+                instagram: 'https://instagram.com/rosebud.dev',
+                tiktok: 'https://tiktok.com/@rosebud.dev',
             },
             editLink:
                 process.env.NODE_ENV === 'development'
