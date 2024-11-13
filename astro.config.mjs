@@ -1,11 +1,14 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+const site = 'https://rosebud.dev';
+
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://rosebud.dev',
+    site,
     integrations: [
         starlight({
             title: 'rosebud',
@@ -60,6 +63,30 @@ export default defineConfig({
                 },
             ],
         }),
+        {
+            name: 'no-ai-scraping-pretty-please-with-a-cherry-on-top',
+            hooks: {
+                'astro:build:done': async ({ dir }) => {
+                    const aiBotsSource =
+                        'https://raw.githubusercontent.com/ai-robots-txt/ai.robots.txt/refs/heads/main/robots.txt';
+                    const aiBots = await (await fetch(aiBotsSource)).text();
+
+                    const robotsTxt = `User-agent: *
+Allow: /
+
+# fun how we have to do this now
+${aiBots.trim()}
+
+Sitemap: ${site}/sitemap-index.xml`;
+
+                    await fs.writeFile(
+                        new URL('robots.txt', dir),
+                        robotsTxt,
+                        'utf-8',
+                    );
+                },
+            },
+        },
     ],
     vite: {
         css: {
