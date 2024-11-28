@@ -37,10 +37,9 @@
 @media (min-width: 50rem) {
     :root {
         // wider sidebar
-        --sl-sidebar-width: clamp(
+        --sl-sidebar-width: max(
             17.5rem,
-            calc(100vw - var(--sl-content-width) - 15rem),
-            27.5rem
+            calc(50vw + 40px - (var(--sl-content-width) + 15rem) / 2)
         );
         --sl-sidebar-pad-x: 2rem;
 
