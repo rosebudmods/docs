@@ -8,50 +8,46 @@ next: check out styled renaming!
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-skin overrides supports many versions of minecraft, going back to 1.14.4. versions before 1.19.4 do not have the ui, and the mod can only be used by [modifying the files yourself](/skin-overrides/advanced/). from 1.19.4 onwards, the mod has [networking abilities](/skin-overrides/usage/#server-support).
+skin overrides supports many versions of minecraft, going back to 1.14.4. versions before 1.19.4 do not have the ui, and the mod can only be used by [modifying the files yourself](/skin-overrides/advanced/). from 1.19.4 onwards, the mod has both the [user interface](/skin-overrides/usage/) and [networking abilities](/skin-overrides/networking/).
 
-here are the update drops the mod supports:
+here are the updates the mod fully supports:
 
-|               drop | version | from  | to  | ui? | server? |
-| -----------------: | :-----: | :---: | :-: | :-: | :-----: |
-| The Garden Awakens | 1.21.4  | 2.2.2 | --  | ✅  |   ✅    |
-| Bundles of Bravery | 1.21.3  | 2.2.0 | --  | ✅  |   ✅    |
-|      Tricky Trials | 1.21.1  | 1.0.0 | --  | ✅  |   ✅    |
-|       Armored Paws | 1.20.6  | 1.0.0 | --  | ✅  |   ✅    |
-|      Bats and Pots | 1.20.4  | 1.0.0 | --  | ✅  |   ✅    |
+| version | drop name          | since | estimated EOL |
+| :-----: | :----------------- | :---: | :-----------: |
+| 1.21.5  | Spring to Life     | 2.3.0 |    Q1 2028    |
+| 1.21.4  | The Garden Awakens | 2.2.2 |    Q4 2027    |
+| 1.21.3  | Bundles of Bravery | 2.2.0 |    Q3 2027    |
+| 1.21.1  | Tricky Trials      | 1.0.0 |    Q2 2027    |
+| 1.20.6  | Armored Paws       | 1.0.0 |    Q1 2027    |
+| 1.20.4  | Bats and Pots      | 1.0.0 |    Q4 2026    |
+| 1.20.2  | --                 | 1.0.0 |    Q3 2026    |
+| 1.20.1  | --                 | 2.1.0 |    Q2 2026    |
+| 1.19.4  | --                 | 2.1.0 |    Q1 2026    |
 
-\
-and here are the pre-1.20.4 updates the mod supports:
+the "estimated EOL" column shows approximately when that minecraft version will lose support (assuming 4 drops per year).
 
-| version | from  | support ends | ui? | server? |
-| ------: | :---: | :----------: | :-: | :-----: |
-|  1.20.2 | 1.0.0 |   sep 2025   | ✅  |   ✅    |
-|  1.20.1 | 2.1.0 |  _jun 2028_  | ✅  |   ✅    |
-|  1.19.4 | 2.1.0 |   mar 2025   | ✅  |   ✅    |
-|  1.19.3 | 2.1.0 |   dec 2024   | ❌  |   ❌    |
-|  1.19.2 | 2.1.0 |  _aug 2027_  | ❌  |   ❌    |
-|  1.18.2 | 2.1.0 |  _feb 2027_  | ❌  |   ❌    |
-|  1.17.1 | 2.1.1 |  _jul 2026_  | ❌  |   ❌    |
-|  1.16.5 | 2.1.1 |  _jan 2026_  | ❌  |   ❌    |
-|  1.15.2 | 2.1.1 |  _jan 2025_  | ❌  |   ❌    |
+these versions are no longer supported:
 
-<details>
-  <summary>no longer supported versions</summary>
+| version | drop name | from  |  to   | receiving patches? | ui/server? |
+| :-----: | :-------- | :---: | :---: | :----------------: | :--------: |
+| 1.19.3  | --        | 2.1.0 | 2.3.x |         ✅         |     ❌     |
+| 1.19.2  | --        | 2.1.0 | 2.3.x |         ✅         |     ❌     |
+|  1.19   | --        | 2.1.0 | 2.1.1 |         ❌         |     ❌     |
+| 1.18.2  | --        | 2.1.0 | 2.3.x |         ✅         |     ❌     |
+| 1.18.1  | --        | 2.1.0 | 2.1.1 |         ❌         |     ❌     |
+| 1.17.1  | --        | 2.1.1 | 2.3.x |         ✅         |     ❌     |
+| 1.16.5  | --        | 2.1.1 | 2.3.x |         ✅         |     ❌     |
+| 1.15.2  | --        | 2.1.1 | 2.3.x |         ✅         |     ❌     |
+| 1.14.4  | --        | 2.1.1 | 2.1.1 |         ❌         |     ❌     |
 
-| version | from  |  to   | ui? | server? | updates ended |
-| ------: | :---: | :---: | :-: | :-----: | :-----------: |
-|    1.19 | 2.1.0 | 2.1.1 | ❌  |   ❌    |   jun 2024    |
-|  1.18.1 | 2.1.0 | 2.1.1 | ❌  |   ❌    |   dec 2023    |
-|  1.14.4 | 2.1.1 | 2.1.1 | ❌  |   ❌    |  _jul 2024_   |
-
-</details>
+<br />
 
 <details>
   <summary>which versions are supported?</summary>
 
-**update drops:** the latest version of the 10 latest drops will be supported.
+the latest version of the 12 latest updates will be supported.
 
-**pre-1.20.4:** all releases, except for those with hotfixes (a patch release with the same protocol number), will have versions supporting it for at least 2 years after its release. the most used version of a particular update (by modrinth mods supporting it) will be supported for 5 years. versions before 1.14 cannot be supported.
+support for versions 1.19.3 and lower are deprecated and will be removed in 2.4.0.
 
 </details>
 
