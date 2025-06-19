@@ -18,6 +18,7 @@ export default defineConfig({
             },
             social: {
                 github: 'https://github.com/rosebudmods',
+                codeberg: 'https://codeberg.org/rosebudmods',
                 discord: 'https://discord.rosebud.dev/',
                 blueSky: 'https://bsky.app/profile/rosebud.dev',
                 instagram: 'https://instagram.com/rosebud.dev',
