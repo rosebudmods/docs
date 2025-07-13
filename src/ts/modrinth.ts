@@ -38,10 +38,18 @@ export type Project = {
     game_versions: string[];
     loaders: string[];
 
-    singleplayer: boolean[];
-    client_only: boolean[];
-    server_only: boolean[];
-    client_and_server: boolean[];
+    environment: (
+        | 'client_and_server'
+        | 'client_only'
+        | 'client_only_server_optional'
+        | 'singleplayer_only'
+        | 'server_only'
+        | 'server_only_client_optional'
+        | 'dedicated_server_only'
+        | 'client_or_server'
+        | 'client_or_server_prefers_both'
+        | 'unknown'
+    )[];
 
     link_urls: {
         [K in LinkTypes]?: {
@@ -76,16 +84,6 @@ export type Project = {
     monetization_status?: 'monetized' | 'demonetized' | 'force-demonetized';
     thread_id?: string;
 };
-
-export async function getProject(id: string): Promise<Project> {
-    return await (
-        await fetch('https://api.modrinth.com/v2/project/' + id, {
-            headers: {
-                'user-agent': 'rosebudmods/docs (orifu@duck.com)',
-            },
-        })
-    ).json();
-}
 
 export async function getOrgProjects(id: string): Promise<Project[]> {
     return await (

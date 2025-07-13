@@ -89,13 +89,4 @@ Sitemap: ${site}/sitemap-index.xml`;
             },
         },
     ],
-    vite: {
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    api: 'modern-compiler',
-                },
-            },
-        },
-    },
 });

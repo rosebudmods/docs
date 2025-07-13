@@ -15,19 +15,26 @@ export const kebabToCamel = (s: string) =>
     s.replaceAll(/-(.)/g, (_, c) => c.toUpperCase());
 
 export function formatProjectSides(project: Project): string {
-    const singleplayer = project.singleplayer[0] ?? false;
-    const clientAndServer = project.client_and_server[0] ?? false;
-    const clientOnly = project.client_only[0]!;
-    const serverOnly = project.server_only[0]!;
-
-    if ((singleplayer || clientAndServer) && !clientOnly && !serverOnly) {
-        return 'Client and Server';
-    } else if (clientOnly && serverOnly) {
-        return 'Client or Server';
-    } else if (clientOnly) {
-        return 'Client';
-    } else if (serverOnly) {
-        return 'Server';
+    switch (project.environment[0]) {
+        case 'client_and_server':
+            return 'Client and Server';
+        case 'client_only':
+            return 'Client';
+        case 'client_only_server_optional':
+            return 'Client (and Server)';
+        case 'client_or_server':
+            return 'Anywhere';
+        case 'client_or_server_prefers_both':
+            return 'Client or Server';
+        case 'dedicated_server_only':
+            return 'Dedicated Server';
+        case 'server_only':
+            return 'Server';
+        case 'server_only_client_optional':
+            return 'Server (and Client)';
+        case 'singleplayer_only':
+            return 'Singleplayer';
+        default:
+            return 'Unknown';
     }
-    return 'Unknown';
 }
