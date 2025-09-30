@@ -16,14 +16,38 @@ export default defineConfig({
             logo: {
                 src: './src/assets/rosebud.svg',
             },
-            social: {
-                github: 'https://github.com/rosebudmods',
-                codeberg: 'https://codeberg.org/rosebudmods',
-                discord: 'https://discord.rosebud.dev/',
-                blueSky: 'https://bsky.app/profile/rosebud.dev',
-                instagram: 'https://instagram.com/rosebud.dev',
-                tiktok: 'https://tiktok.com/@rosebud.dev',
-            },
+            social: [
+                {
+                    icon: 'github',
+                    label: 'GitHub',
+                    href: 'https://github.com/rosebudmods',
+                },
+                {
+                    icon: 'codeberg',
+                    label: 'Codeberg',
+                    href: 'https://codeberg.org/rosebudmods',
+                },
+                {
+                    icon: 'discord',
+                    label: 'Discord',
+                    href: 'https://discord.rosebud.dev',
+                },
+                {
+                    icon: 'blueSky',
+                    label: 'Bluesky',
+                    href: 'https://bsky.app/profile/rosebud.dev',
+                },
+                {
+                    icon: 'instagram',
+                    label: 'Instagram',
+                    href: 'https://instagram.com/rosebud.dev',
+                },
+                {
+                    icon: 'tiktok',
+                    label: 'TikTok',
+                    href: 'https://tiktok.com/@rosebud.dev',
+                },
+            ],
             editLink:
                 process.env.NODE_ENV === 'development'
                     ? {
