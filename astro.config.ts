@@ -25,7 +25,7 @@ export default defineConfig({
                 {
                     icon: 'codeberg',
                     label: 'Codeberg',
-                    href: 'https://codeberg.org/rosebudmods',
+                    href: 'https://codeberg.org/rosebud',
                 },
                 {
                     icon: 'discord',

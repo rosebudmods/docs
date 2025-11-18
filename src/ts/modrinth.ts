@@ -89,7 +89,7 @@ export async function getOrgProjects(id: string): Promise<Project[]> {
     return await (
         await fetch(`https://api.modrinth.com/v3/organization/${id}/projects`, {
             headers: {
-                'user-agent': 'rosebudmods/docs (orifu@duck.com)',
+                'user-agent': 'codeberg/rosebud/docs (orifu@duck.com)',
             },
         })
     ).json();
