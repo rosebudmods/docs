@@ -1,14 +1,14 @@
 starlight-file-tree {
     // use regular font
-    font-family: var(--sl-font) !important;
+    font-family: var(--sl-font);
 
-    background: unset !important;
-    border: none !important;
+    background: unset;
+    border: none;
 }
 
 .tree-entry .comment {
-    font-family: var(--sl-font) !important;
+    font-family: var(--sl-font);
 
     // TODO: common indentation for all lines?
-    padding-inline-start: 2rem !important;
+    padding-inline-start: 2rem;
 }

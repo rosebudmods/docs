@@ -13,15 +13,15 @@
     --sl-text-h4: var(--sl-text-xl);
 
     // nicer shadows
-    --sl-shadow-sm: 0 0.5px 1px rgb(0 0 0 / 0.1), 0 1px 5px rgb(0 0 0 / 0.05) !important;
-    --sl-shadow-lg: 0 3px 5px hsl(0 0 0 / 0.2), 0 5px 15px hsl(0 0 0 / 0.05) !important;
+    --sl-shadow-sm: 0 0.5px 1px rgb(0 0 0 / 0.1), 0 1px 5px rgb(0 0 0 / 0.05);
+    --sl-shadow-lg: 0 3px 5px hsl(0 0 0 / 0.2), 0 5px 15px hsl(0 0 0 / 0.05);
 
     // nicer badge colours
-    --sl-badge-default-bg: var(--sl-color-accent-low) !important;
-    --sl-badge-default-text: var(--sl-color-accent-high) !important;
-    --sl-badge-default-border: transparent !important;
+    --sl-badge-default-bg: var(--sl-color-accent-low);
+    --sl-badge-default-text: var(--sl-color-accent-high);
+    --sl-badge-default-border: transparent;
     &[data-theme='dark'] {
-        --sl-badge-default-bg: var(--sl-color-gray-5) !important;
+        --sl-badge-default-bg: var(--sl-color-gray-5);
     }
 }
 
@@ -50,11 +50,11 @@
 
     // make the content actually the size specified
     body > .page:has(> nav) .main-pane {
-        width: calc(var(--sl-content-width) + 10rem) !important;
+        width: calc(var(--sl-content-width) + 10rem);
         max-width: 100%;
 
         > main {
-            max-width: var(--sl-content-width) !important;
+            max-width: var(--sl-content-width);
             margin-inline: auto;
         }
     }

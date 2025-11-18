@@ -8,8 +8,8 @@ code {
 }
 
 :root {
-    --ec-frm-edBg: var(--sl-color-gray-5) !important;
-    --ec-frm-edActTabBg: var(--sl-color-gray-5) !important;
+    --ec-frm-edBg: var(--sl-color-gray-5);
+    --ec-frm-edActTabBg: var(--sl-color-gray-5);
 }
 
 // code blocks
@@ -26,35 +26,35 @@ code {
     --ec-brdRad: 0.5rem;
 
     // mark colours
-    --ec-tm-markBg: #{opacity(var(--sl-color-accent-low), 30%)} !important;
-    --ec-tm-markBrdCol: var(--sl-color-accent) !important;
+    --ec-tm-markBg: #{opacity(var(--sl-color-accent-low), 30%)};
+    --ec-tm-markBrdCol: var(--sl-color-accent);
     .ec-line.ins {
-        --tmLineBgCol: #{opacity(var(--ec-tm-insBg), 30%)} !important;
+        --tmLineBgCol: #{opacity(var(--ec-tm-insBg), 30%)};
     }
     .ec-line.del {
-        --tmLineBgCol: #{opacity(var(--ec-tm-delBg), 30%)} !important;
+        --tmLineBgCol: #{opacity(var(--ec-tm-delBg), 30%)};
     }
 
     figure {
-        background: var(--code-background) !important;
+        background: var(--code-background);
 
         figcaption.header {
             // no background
-            background: unset !important;
+            background: unset;
 
             // no borders
-            border: none !important;
-            border-bottom: 1px solid var(--sl-color-gray-5) !important;
+            border: none;
+            border-bottom: 1px solid var(--sl-color-gray-5);
 
             .title {
                 position: relative;
-                overflow: visible !important;
+                overflow: visible;
 
                 // rounder tab
                 --tab-border-radius: calc(0.75rem - 0.25rem);
 
                 // no border
-                border: none !important;
+                border: none;
                 &::after {
                     display: none;
                 }
@@ -65,9 +65,9 @@ code {
             content: '';
             display: unset;
             position: absolute;
-            inset: unset !important;
-            inset-inline: 0.75em !important;
-            bottom: -1px !important;
+            inset: unset;
+            inset-inline: 0.75em;
+            bottom: -1px;
             overflow: visible;
 
             height: 2px;
@@ -85,7 +85,7 @@ code {
         }
 
         pre {
-            background: unset !important;
+            background: unset;
             border: none;
         }
 
